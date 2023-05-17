@@ -1,7 +1,9 @@
 package com.best.kwan.service;
 
-import com.best.kwan.Entity.User;
+import com.best.kwan.Entity.UserEntity;
 import com.best.kwan.Repository.UserRepository;
+import com.best.kwan.eums.ErrorCode;
+import com.best.kwan.exception.CustomException;
 import com.best.kwan.vo.UserPageVO;
 import com.best.kwan.vo.UserVO;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 // controller -> service - repository -> DB
 
 @Service
@@ -23,23 +27,23 @@ public class UserService {
 
     public void createUser(UserVO userVO) {
 
-        User user  = new User(userVO);
+        UserEntity userEntity = new UserEntity(userVO);
         System.out.println("USER DATA Check : " + userVO.getAddress());
 
-        userRepository.save(user);
+        userRepository.save(userEntity);
     }
 
     public UserPageVO getUsers(Pageable pageable) {
 //    public Page<User> getUsers(Pageable pageable) {
 
-        Page<User> users = userRepository.findAll(pageable);
+        Page<UserEntity> users = userRepository.findAll(pageable);
 
         List<UserVO> resultList = new ArrayList<>();
-        for(int i=0; i<users.getContent().size(); i++){
-          User user = users.getContent().get(i);
+        for (int i = 0; i < users.getContent().size(); i++) {
+            UserEntity userEntity = users.getContent().get(i);
 
-          UserVO userVo = new UserVO(user);
-          resultList.add(userVo);
+            UserVO userVo = new UserVO(userEntity);
+            resultList.add(userVo);
         }
         UserPageVO userPageVO = new UserPageVO(users.getTotalPages(), resultList);
 
@@ -48,22 +52,52 @@ public class UserService {
 
     public UserVO getUser(Long id) {
 
-        User user= userRepository.findById(id).orElseThrow();
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        UserVO userVo = new UserVO(user);
+        UserVO userVo = new UserVO(userEntity);
 
         return userVo;
     }
 
-    public void updateUser(UserVO userVo , Long id) {
+    public void updateUser(UserVO userVo, Long id) {
 
-        User user = new User(userVo);
-        user.setId(id);
+        UserEntity userEntity = new UserEntity(userVo);
+        userEntity.setId(id);
 
-        userRepository.save(user);
+        userRepository.save(userEntity);
     }
+
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+
+    public UserVO login(UserVO userVO, HttpSession session) {
+
+        Optional<UserEntity> byUserEmail = userRepository.findByEmail(userVO.getEmail());
+
+
+        if (byUserEmail.isPresent()) {
+            //조회결과가 있다 ( 해당 이메일을 가진 정보가 있다.)
+            UserEntity userEntity = byUserEmail.get();
+
+            if (userEntity.getPwd().equals(userVO.getPwd())) {
+                // 비밀번호가 일치
+                //Entity -> VO 변경
+                UserVO vo = UserVO.toUserVO(userEntity);
+                session.setAttribute("loginEmail", vo.getEmail());
+                return vo;
+            } else {
+                // 비밀번호 불일치 -> 로그인실패
+                return null;
+            }
+
+        } else {
+            //조회결과 X
+            return null;
+        }
+
+    }
+
 }
 

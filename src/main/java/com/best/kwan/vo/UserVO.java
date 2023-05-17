@@ -1,6 +1,6 @@
 package com.best.kwan.vo;
 
-import com.best.kwan.Entity.User;
+import com.best.kwan.Entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,11 +20,23 @@ public class UserVO {
 
     private String address;
 
-    public UserVO(User user){
-        this.name = user.getName();
-        this.pwd =  user.getPwd();
-        this.number = user.getNumber();
-        this.email = user.getEmail();
-        this.address = user.getAddress();
+    public UserVO(UserEntity userEntity){
+        this.name = userEntity.getName();
+        this.pwd =  userEntity.getPwd();
+        this.number = userEntity.getNumber();
+        this.email = userEntity.getEmail();
+        this.address = userEntity.getAddress();
+    }
+
+    public static UserVO toUserVO (UserEntity userEntity){
+
+        UserVO userVO =  new UserVO();
+        userVO.setName(userEntity.getName());
+        userVO.setPwd(userEntity.getPwd());
+        userVO.setEmail(userEntity.getEmail());
+        userVO.setNumber(userEntity.getNumber());
+        userVO.setAddress(userEntity.getAddress());
+
+        return  userVO;
     }
 }

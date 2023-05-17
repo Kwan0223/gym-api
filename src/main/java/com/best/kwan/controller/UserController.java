@@ -1,18 +1,16 @@
 package com.best.kwan.controller;
 
-import com.best.kwan.Entity.User;
 import com.best.kwan.service.UserService;
 import com.best.kwan.util.ValidationUtil;
 import com.best.kwan.vo.UserPageVO;
 import com.best.kwan.vo.UserVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,8 +43,6 @@ public class UserController {
 
     @GetMapping
     public UserPageVO getUsers(@RequestParam int page, @RequestParam int size) {
-//    public Page<User> getUsers(@RequestParam int page, @RequestParam int size) {
-
         page = page - 1;
         Pageable pageable = PageRequest.of(page, size, Sort.unsorted());
 
@@ -82,6 +78,20 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
 
         userService.deleteUser(id);
+    }
+
+
+    @PostMapping("/login")
+    public String login(@RequestParam UserVO userVO, HttpSession session) {
+
+        UserVO loginReulst = userService.login(userVO , session);
+
+        if (loginReulst != null) {
+            System.out.println("TEST Sueece!!");
+            return "main";
+        } else {
+            return "login";
+        }
     }
 
 

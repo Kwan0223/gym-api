@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "User")
 @Entity
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class User {
     @Column
     private String address;
 
-    public User(UserVO uservo) {
+    public UserEntity(UserVO uservo) {
 
         this.name = uservo.getName();
         this.pwd = uservo.getPwd();
