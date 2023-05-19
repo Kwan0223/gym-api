@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
+//@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -82,15 +82,17 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public String login(@RequestParam UserVO userVO, HttpSession session) {
+    public String login(@RequestBody  UserVO userVO, HttpSession session) {
 
         UserVO loginReulst = userService.login(userVO , session);
 
         if (loginReulst != null) {
-            System.out.println("TEST Sueece!!");
-            return "main";
+            System.out.println("TEST Sccesss!!");
+            return "login Sccess";
         } else {
-            return "login";
+            System.out.println("TEST Fail!!");
+
+            return "login Fail";
         }
     }
 

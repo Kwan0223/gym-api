@@ -74,30 +74,35 @@ public class UserService {
 
     public UserVO login(UserVO userVO, HttpSession session) {
 
-        Optional<UserEntity> byUserEmail = userRepository.findByEmail(userVO.getEmail());
+        try {
+            Optional<UserEntity> byUserEmail = userRepository.findByEmail(userVO.getEmail());
+            System.out.println("TEST byUSerEail : " + byUserEmail);
+            if (byUserEmail.isPresent()) {
+                //조회결과가 있다 ( 해당 이메일을 가진 정보가 있다.)
+                UserEntity userEntity = byUserEmail.get();
 
+                if (userEntity.getPwd().equals(userVO.getPwd())) {
+                    // 비밀번호가 일치
+                    //Entity -> VO 변경
+                    UserVO vo = UserVO.toUserVO(userEntity);
+                    session.setAttribute("loginEmail", vo.getEmail());
+                    return vo;
+                } else {
+                    // 비밀번호 불일치 -> 로그인실패
+                    return null;
+                }
 
-        if (byUserEmail.isPresent()) {
-            //조회결과가 있다 ( 해당 이메일을 가진 정보가 있다.)
-            UserEntity userEntity = byUserEmail.get();
-
-            if (userEntity.getPwd().equals(userVO.getPwd())) {
-                // 비밀번호가 일치
-                //Entity -> VO 변경
-                UserVO vo = UserVO.toUserVO(userEntity);
-                session.setAttribute("loginEmail", vo.getEmail());
-                return vo;
             } else {
-                // 비밀번호 불일치 -> 로그인실패
+                //조회결과 X
                 return null;
             }
-
-        } else {
-            //조회결과 X
+            // ...
+        } catch (Exception e) {
+            System.out.println("Exception occurred during login:");
+            e.printStackTrace();
             return null;
         }
 
+
     }
-
 }
-
