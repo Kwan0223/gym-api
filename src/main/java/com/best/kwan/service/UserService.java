@@ -4,17 +4,20 @@ import com.best.kwan.Entity.UserEntity;
 import com.best.kwan.Repository.UserRepository;
 import com.best.kwan.eums.ErrorCode;
 import com.best.kwan.exception.CustomException;
+import com.best.kwan.vo.PasswordVO;
 import com.best.kwan.vo.UserPageVO;
 import com.best.kwan.vo.UserVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 // controller -> service - repository -> DB
 
 @Service
@@ -23,15 +26,16 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public void createUser(UserVO userVO) {
 
         UserEntity userEntity = new UserEntity(userVO);
         System.out.println("USER DATA Check : " + userVO.getAddress());
-
+        userEntity.setPwd(passwordEncoder.encode(userVO.getPwd()));
         userRepository.save(userEntity);
     }
+
 
     public UserPageVO getUsers(Pageable pageable) {
 //    public Page<User> getUsers(Pageable pageable) {
@@ -59,12 +63,25 @@ public class UserService {
         return userVo;
     }
 
-    public void updateUser(UserVO userVo, Long id) {
 
-        UserEntity userEntity = new UserEntity(userVo);
-        userEntity.setId(id);
+    public UserVO getUserEmail(String email) {
 
-        userRepository.save(userEntity);
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        UserVO userVo = new UserVO(userEntity);
+
+        return userVo;
+    }
+
+
+    public void updateUser(UserVO userVo , HttpSession session) {
+
+        String email = (String) session.getAttribute("loginEmail");
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        UserEntity updateUserEntity = new UserEntity(userVo);
+        updateUserEntity.setId(userEntity.getId());
+
+        userRepository.save(updateUserEntity);
     }
 
     public void deleteUser(Long id) {
@@ -74,35 +91,33 @@ public class UserService {
 
     public UserVO login(UserVO userVO, HttpSession session) {
 
-        try {
-            Optional<UserEntity> byUserEmail = userRepository.findByEmail(userVO.getEmail());
-            System.out.println("TEST byUSerEail : " + byUserEmail);
-            if (byUserEmail.isPresent()) {
-                //조회결과가 있다 ( 해당 이메일을 가진 정보가 있다.)
-                UserEntity userEntity = byUserEmail.get();
+        UserEntity user = userRepository.findByEmail(userVO.getEmail())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-                if (userEntity.getPwd().equals(userVO.getPwd())) {
-                    // 비밀번호가 일치
-                    //Entity -> VO 변경
-                    UserVO vo = UserVO.toUserVO(userEntity);
-                    session.setAttribute("loginEmail", vo.getEmail());
-                    return vo;
-                } else {
-                    // 비밀번호 불일치 -> 로그인실패
-                    return null;
-                }
-
-            } else {
-                //조회결과 X
-                return null;
-            }
-            // ...
-        } catch (Exception e) {
-            System.out.println("Exception occurred during login:");
-            e.printStackTrace();
-            return null;
+        if (!passwordEncoder.matches(userVO.getPwd(), user.getPwd())) {
+            throw new CustomException(ErrorCode.PASSWORD_MISMATCH);
         }
 
+        UserVO vo = UserVO.toUserVO(user);
+        session.setAttribute("loginEmail", vo.getEmail());
 
+        return vo;
     }
+
+    public ResponseEntity changeUserPassword(PasswordVO passwordVO , HttpSession session) {
+
+        String email = (String) session.getAttribute("loginEmail");
+        session.setMaxInactiveInterval(0);
+
+        UserEntity user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        System.out.println("TEST user Info : " + user);
+        if (!passwordEncoder.matches(user.getPwd(), passwordVO.getOldPwd())) {
+            throw new CustomException(ErrorCode.PASSWORD_MISMATCH);
+        }
+
+        user.setPwd(passwordEncoder.encode(passwordVO.getNewPwd()));
+        userRepository.save(user);
+        return ResponseEntity.ok().body(ErrorCode.SUCCESS);
+    }
+
 }

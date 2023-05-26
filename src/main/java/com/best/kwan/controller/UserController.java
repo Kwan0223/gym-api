@@ -2,22 +2,26 @@ package com.best.kwan.controller;
 
 import com.best.kwan.service.UserService;
 import com.best.kwan.util.ValidationUtil;
+import com.best.kwan.vo.PasswordVO;
 import com.best.kwan.vo.UserPageVO;
 import com.best.kwan.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/users")
+//@RequestMapping("/api/v1/users")
 public class UserController {
 
     private final UserService userService;
+
+    private final  HttpSession session;
 
     @RequestMapping("/home")
     public String getHome() {
@@ -25,16 +29,16 @@ public class UserController {
         return "Start Project";
     }
 
-    @PostMapping
+    @PostMapping("/signUp")
     public String createTest(@RequestBody UserVO userVO) {
 
         boolean checkPwd = ValidationUtil.checkPwd(userVO.getPwd());
         boolean checkEmail = ValidationUtil.checkEmail(userVO.getEmail());
         if (!checkPwd) {
-            return "비밀번호 유효성 체크부탁드립니다.";
+            return "PwdCheck";
         }
         if (!checkEmail) {
-            return "이메일 유효성 체크부탁드립니다.";
+            return "EmailCheck";
         }
 
         userService.createUser(userVO);
@@ -70,7 +74,7 @@ public class UserController {
             return "이메일 유효성 체크부탁드립니다.";
         }
 
-        userService.updateUser(userVO, id);
+        userService.updateUser(userVO, session);
         return "SUCCESS";
     }
 
@@ -82,18 +86,22 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public String login(@RequestBody  UserVO userVO, HttpSession session) {
+    public ResponseEntity<UserVO> login(@RequestBody  UserVO userVO) {
 
         UserVO loginReulst = userService.login(userVO , session);
 
-        if (loginReulst != null) {
-            System.out.println("TEST Sccesss!!");
-            return "login Sccess";
-        } else {
-            System.out.println("TEST Fail!!");
+        return ResponseEntity.ok().body(loginReulst);
+    }
+    @GetMapping("/{email}")
+    public UserVO getUser(@PathVariable String email) {
+        System.out.println("test : "+ email);
+        return userService.getUserEmail(email);
+    }
 
-            return "login Fail";
-        }
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestBody PasswordVO passwordVO) {
+        System.out.println("TEST changePWD Data :" + passwordVO);
+        return userService.changeUserPassword(passwordVO, session);
     }
 
 

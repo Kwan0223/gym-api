@@ -3,6 +3,7 @@ package com.best.kwan.exception;
 
 import com.best.kwan.eums.ErrorCode;
 import com.best.kwan.vo.BaseResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,12 +11,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 
 @ControllerAdvice
+@Slf4j
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<BaseResponse> handleCustomException(CustomException errorCode) {
-
+        logger.error("Error Msg : " + errorCode.getMsg());
         return new ResponseEntity<>(new BaseResponse(errorCode.getMsg()), errorCode.getHttpStatus());
     }
 
@@ -28,7 +30,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BaseResponse> handlerException(Exception e) {
-
+        logger.error("e stack error : " + e.getStackTrace());
         return new ResponseEntity<>(new BaseResponse(ErrorCode.UNEXPECTED_ERROR),
                 ErrorCode.UNEXPECTED_ERROR.getHttpStatus());
     }

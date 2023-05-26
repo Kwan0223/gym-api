@@ -20,6 +20,8 @@ public class UserVO {
 
     private String address;
 
+    private String image;
+
     public UserVO(UserEntity userEntity){
         this.name = userEntity.getName();
         this.pwd =  userEntity.getPwd();
