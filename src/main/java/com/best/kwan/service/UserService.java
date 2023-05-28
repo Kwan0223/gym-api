@@ -38,7 +38,6 @@ public class UserService {
 
 
     public UserPageVO getUsers(Pageable pageable) {
-//    public Page<User> getUsers(Pageable pageable) {
 
         Page<UserEntity> users = userRepository.findAll(pageable);
 
