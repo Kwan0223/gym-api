@@ -2,6 +2,8 @@ package com.best.kwan.Entity;
 
 import com.best.kwan.vo.TrainerVO;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,7 +20,7 @@ public class TrainerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trainerId;
-    private Long pointId;
+//    private Long pointId;
 
     @Column(length = 255)
     private String name;
@@ -30,9 +32,10 @@ public class TrainerEntity {
 
     @Column(length = 255)
     private String gender;
-    @Column
+    @CreationTimestamp
+    @Column(updatable = false)
     private Date createAt;
-    @Column(length = 255)
+    @UpdateTimestamp
     private Date updateAt;
 
 

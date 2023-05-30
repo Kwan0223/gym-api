@@ -12,11 +12,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private final UserService userService;
@@ -102,6 +103,19 @@ public class UserController {
     public ResponseEntity<?> changePassword(@RequestBody PasswordVO passwordVO) {
         System.out.println("TEST changePWD Data :" + passwordVO);
         return userService.changeUserPassword(passwordVO, session);
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        System.out.println("TEST logOut : " +  request);
+        HttpSession session = request.getSession(false);
+        System.out.println("TEST logOut : " +  session);
+
+        if (session != null) {
+            session.invalidate();
+            System.out.println("Session OUT!!!");
+        }
+        return "You have been logged out successfully";
     }
 
 

@@ -2,6 +2,8 @@ package com.best.kwan.Entity;
 
 import com.best.kwan.vo.CompanyVO;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,9 +28,10 @@ public class CompanyEntity {
     private String managerName;
     @Column(length = 255)
     private String managerPhone;
-    @Column
+    @CreationTimestamp
+    @Column(updatable = false)
     private Date createAt;
-    @Column(length = 255)
+    @UpdateTimestamp
     private Date updateAt;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)

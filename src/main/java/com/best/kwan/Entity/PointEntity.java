@@ -2,6 +2,8 @@ package com.best.kwan.Entity;
 
 import com.best.kwan.vo.PointVO;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,7 +22,7 @@ public class PointEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pointId;
-    private Long companyId;
+//    private Long companyId;
 
     @Column(length = 255)
     private String pointName;
@@ -33,9 +35,10 @@ public class PointEntity {
     private String email;
     @Column(length = 255)
     private String pwd;
-    @Column
+    @CreationTimestamp
+    @Column(updatable = false)
     private Date createAt;
-    @Column(length = 255)
+    @UpdateTimestamp
     private Date updateAt;
 
 
