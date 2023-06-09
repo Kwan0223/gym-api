@@ -3,6 +3,7 @@ package com.best.kwan.controller;
 import com.best.kwan.service.UserService;
 import com.best.kwan.util.ValidationUtil;
 import com.best.kwan.vo.PasswordVO;
+import com.best.kwan.vo.PointImageVO;
 import com.best.kwan.vo.UserPageVO;
 import com.best.kwan.vo.UserVO;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -117,6 +119,5 @@ public class UserController {
         }
         return "You have been logged out successfully";
     }
-
 
 }

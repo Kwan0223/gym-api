@@ -6,7 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,12 +15,15 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "Trainer")
 @Entity
-public class TrainerEntity {
+public class TrainerEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trainerId;
-//    private Long pointId;
+
+    @ManyToOne
+    @JoinColumn(name = "pointId")
+    private PointEntity point;
 
     @Column(length = 255)
     private String name;
@@ -32,16 +35,7 @@ public class TrainerEntity {
 
     @Column(length = 255)
     private String gender;
-    @CreationTimestamp
-    @Column(updatable = false)
-    private Date createAt;
-    @UpdateTimestamp
-    private Date updateAt;
 
-
-    @ManyToOne
-    @JoinColumn(name = "pointId")
-    private PointEntity point;
 
 
 

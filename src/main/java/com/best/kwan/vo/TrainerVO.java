@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -25,7 +26,7 @@ public class TrainerVO {
 
     private String gender;
 
-    private Date createAt;
+    private LocalDateTime createAt;
 
-    private Date updateAt;
+    private LocalDateTime updateAt;
 }

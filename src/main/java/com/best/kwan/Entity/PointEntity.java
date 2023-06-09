@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "point")
 @Entity
-public class PointEntity {
+public class PointEntity extends BaseEntity{
 
 
     @Id
@@ -35,16 +36,23 @@ public class PointEntity {
     private String email;
     @Column(length = 255)
     private String pwd;
-    @CreationTimestamp
-    @Column(updatable = false)
-    private Date createAt;
-    @UpdateTimestamp
-    private Date updateAt;
+
+    @Column(length = 255)
+    private String pointAddress;
+
+    @Column(length = 255)
+    private String pointUrl;
+
+
 
 
     @ManyToOne
     @JoinColumn(name = "companyId")
     private CompanyEntity company;
+
+
+    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
+    private List<PointImageEntity> pointImageEntities;
 
     @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
     private List<TrainerEntity> trainerEntities;
@@ -59,6 +67,8 @@ public class PointEntity {
         this.pwd = pointVO.getPwd();
         this.createAt = pointVO.getCreateAt();
         this.updateAt = pointVO.getUpdateAt();
+        this.pointAddress = pointVO.getPointAddress();
+        this.pointUrl = pointVO.getPointUrl();
 
     }
 }

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -21,7 +23,12 @@ public class CompanyVO {
 
     private String managerPhone;
 
-    private Date createAt;
+    private LocalDateTime createAt;
 
-    private Date updateAt;
+    private LocalDateTime updateAt;
+
+    private String companyAddress;
+
+    private String conpanyUrl;
+
 }

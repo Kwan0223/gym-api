@@ -1,6 +1,7 @@
 package com.best.kwan.vo;
 
 import com.best.kwan.Entity.UserEntity;
+import com.best.kwan.validation.Password;
 import lombok.*;
 
 @Getter
@@ -11,6 +12,7 @@ public class UserVO {
 
     private String name;
 
+    @Password
     private String pwd;
 
     private String number;

@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "Company")
 @Entity
-public class CompanyEntity {
+public class CompanyEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +28,14 @@ public class CompanyEntity {
     private String managerName;
     @Column(length = 255)
     private String managerPhone;
-    @CreationTimestamp
-    @Column(updatable = false)
-    private Date createAt;
-    @UpdateTimestamp
-    private Date updateAt;
+
+    @Column(length = 255)
+    private String companyAddress;
+
+    @Column(length = 255)
+    private String conpanyUrl;
+
+
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<PointEntity> points;
@@ -46,6 +49,8 @@ public  CompanyEntity (CompanyVO companyVO){
     this.managerPhone = companyVO.getManagerPhone();
     this.createAt = companyVO.getCreateAt();
     this.updateAt = companyVO.getUpdateAt();
+    this.companyAddress = companyVO.getCompanyAddress();
+    this.conpanyUrl = companyVO.getConpanyUrl();
 }
 
 }
