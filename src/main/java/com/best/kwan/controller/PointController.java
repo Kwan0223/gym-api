@@ -25,8 +25,7 @@ public class PointController {
 
     @GetMapping("/search")
     public List<PointVO> searchPointList(@RequestParam String pointName) {
-        PointVO pointVO = new PointVO();
-        pointVO.setPointName(pointName);
-        return pointService.searchPointList(pointVO);
+
+        return pointService.searchPointList(pointName);
     }
 }

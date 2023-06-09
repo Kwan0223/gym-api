@@ -42,9 +42,8 @@ public class PointService {
         return pointVOList;
     }
 
-    public List<PointVO> searchPointList(PointVO pointVO) {
-        String PointName = pointVO.getPointName();
-        List<PointEntity> searchResult = pointRepository.findAllByPointNameContaining(PointName);
+    public List<PointVO> searchPointList(String pointName) {
+        List<PointEntity> searchResult = pointRepository.findAllByPointNameContaining(pointName);
 
         List<PointVO> pointVOList = searchResult.stream()
                 .map(PointVO::new)
