@@ -5,6 +5,9 @@ import com.best.kwan.service.PointService;
 import com.best.kwan.vo.PointVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,14 +21,18 @@ public class PointController {
 
 
     @GetMapping
-    public List<PointVO> getPointList() throws JsonProcessingException {
+    public Page<PointVO> getPointList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size ) throws JsonProcessingException {
 
-        return pointService.getPointList();
+        Pageable pageable = PageRequest.of(page, size);
+        return pointService.getPointList(pageable);
     }
 
     @GetMapping("/search")
-    public List<PointVO> searchPointList(@RequestParam String pointName) {
+    public Page<PointVO> searchPointList(@RequestParam String pointName,
+                                         @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
 
-        return pointService.searchPointList(pointName);
+        return pointService.searchPointList(pointName, pageable);
     }
 }

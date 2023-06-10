@@ -7,6 +7,8 @@ import com.best.kwan.vo.PointVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,35 +24,15 @@ public class PointService {
 
 
 
-    public List<PointVO> getPointList() throws JsonProcessingException {
+    public Page<PointVO> getPointList(Pageable pageable) throws JsonProcessingException {
 
-        List<PointEntity> pointList = pointRepository.findAll();
+        Page<PointEntity> resultList  = pointRepository.findAll(pageable);
 
-//        for(int i = 0; i<pointList.size(); i++){
-//            System.out.println("TEST !!  : " + pointList.get(i).getPointImageEntities().size());
-//        }
-
-        List<PointVO> pointVOList = pointList.stream()
-                .map(PointVO::new)
-                .collect(Collectors.toList());
-
-//         ObjectMapper test = new ObjectMapper();
-//        String json = test.writeValueAsString(pointList);
-
-
-
-        return pointVOList;
+        return resultList.map(PointVO::new);
     }
 
-    public List<PointVO> searchPointList(String pointName) {
-        List<PointEntity> searchResult = pointRepository.findAllByPointNameContaining(pointName);
-
-        List<PointVO> pointVOList = searchResult.stream()
-                .map(PointVO::new)
-                .collect(Collectors.toList());
-
-
-        return pointVOList;
-
+    public Page<PointVO> searchPointList(String pointName, Pageable pageable) {
+        Page<PointEntity> searchResult = pointRepository.findAllByPointNameContaining(pointName, pageable);
+        return searchResult.map(PointVO::new);
     }
 }
