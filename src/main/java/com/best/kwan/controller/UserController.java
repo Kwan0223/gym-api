@@ -2,6 +2,7 @@ package com.best.kwan.controller;
 
 import com.best.kwan.service.UserService;
 import com.best.kwan.util.ValidationUtil;
+import com.best.kwan.validation.Password;
 import com.best.kwan.vo.PasswordVO;
 import com.best.kwan.vo.PointImageVO;
 import com.best.kwan.vo.UserPageVO;
@@ -102,8 +103,8 @@ public class UserController {
     }
 
     @PostMapping("/changePassword")
-    public ResponseEntity<?> changePassword(@RequestBody PasswordVO passwordVO) {
-        System.out.println("TEST changePWD Data :" + passwordVO);
+    public ResponseEntity<?> changePassword(@RequestBody  PasswordVO passwordVO) {
+
         return userService.changeUserPassword(passwordVO, session);
     }
 

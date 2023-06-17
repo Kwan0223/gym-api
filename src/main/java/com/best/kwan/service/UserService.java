@@ -105,14 +105,22 @@ public class UserService {
 
     public ResponseEntity changeUserPassword(PasswordVO passwordVO , HttpSession session) {
 
-        String email = (String) session.getAttribute("loginEmail");
-        session.setMaxInactiveInterval(0);
+        String email = passwordVO.getEmail();
 
         UserEntity user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         System.out.println("TEST user Info : " + user);
-        if (!passwordEncoder.matches(user.getPwd(), passwordVO.getOldPwd())) {
+
+        String oldPwd = passwordVO.getOldPwd();
+        System.out.println("TEST oldPwd : " +  oldPwd);
+
+        if (!passwordEncoder.matches(oldPwd, user.getPwd())) {
             throw new CustomException(ErrorCode.PASSWORD_MISMATCH);
         }
+
+        if (passwordEncoder.matches(passwordVO.getNewPwd(), user.getPwd())) {
+            throw new CustomException(ErrorCode.PASSWORD_SAME);
+        }
+
 
         user.setPwd(passwordEncoder.encode(passwordVO.getNewPwd()));
         userRepository.save(user);

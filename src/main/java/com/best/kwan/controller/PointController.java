@@ -21,7 +21,8 @@ public class PointController {
 
 
     @GetMapping
-    public Page<PointVO> getPointList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size ) throws JsonProcessingException {
+    public Page<PointVO> getPointList(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "5") int size ) throws JsonProcessingException {
 
         Pageable pageable = PageRequest.of(page, size);
         return pointService.getPointList(pageable);

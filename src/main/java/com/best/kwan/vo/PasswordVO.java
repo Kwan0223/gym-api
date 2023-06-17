@@ -1,5 +1,6 @@
 package com.best.kwan.vo;
 
+import com.best.kwan.validation.Password;
 import lombok.*;
 
 @Getter
@@ -12,6 +13,7 @@ public class PasswordVO {
 
     private String oldPwd;
 
+    @Password
     private String newPwd;
 
 
