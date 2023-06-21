@@ -57,6 +57,12 @@ public class PointEntity extends BaseEntity{
     @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
     private List<TrainerEntity> trainerEntities;
 
+    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
+    private List<ProductEntity> productEntities;
+
+    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
+    private List<ScheduleEntity> scheduleEntities;
+
 
     public PointEntity(PointVO pointVO){
 

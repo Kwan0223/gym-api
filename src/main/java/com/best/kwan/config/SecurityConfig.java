@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception{
 //        http.formLogin().disable().cors().disable().csrf().disable();

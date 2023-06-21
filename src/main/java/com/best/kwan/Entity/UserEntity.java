@@ -4,6 +4,7 @@ import com.best.kwan.vo.UserVO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @ToString
 @Getter
@@ -32,6 +33,12 @@ public class UserEntity {
 
     @Column
     private String address;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ReservationEntity> reservationEntities;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<PaymentEntity> paymentEntities;
 
     public UserEntity(UserVO uservo) {
 

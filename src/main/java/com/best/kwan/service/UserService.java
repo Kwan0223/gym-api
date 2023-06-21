@@ -110,17 +110,12 @@ public class UserService {
         UserEntity user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         System.out.println("TEST user Info : " + user);
 
-        String oldPwd = passwordVO.getOldPwd();
-        System.out.println("TEST oldPwd : " +  oldPwd);
-
-        if (!passwordEncoder.matches(oldPwd, user.getPwd())) {
-            throw new CustomException(ErrorCode.PASSWORD_MISMATCH);
-        }
+        String newPwd = passwordVO.getNewPwd();
+        System.out.println("TEST newPwd : " +  newPwd);
 
         if (passwordEncoder.matches(passwordVO.getNewPwd(), user.getPwd())) {
             throw new CustomException(ErrorCode.PASSWORD_SAME);
         }
-
 
         user.setPwd(passwordEncoder.encode(passwordVO.getNewPwd()));
         userRepository.save(user);

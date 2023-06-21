@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,6 +37,14 @@ public class TrainerEntity extends BaseEntity{
     @Column(length = 255)
     private String gender;
 
+
+
+    @ManyToOne
+    @JoinColumn(name = "pointId")
+    private ReservationEntity reservation;
+
+    @OneToMany(mappedBy = " trainer", cascade = CascadeType.ALL)
+    private List<PointEntity> pointEntities;
 
 
 

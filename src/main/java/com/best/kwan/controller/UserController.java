@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -103,8 +104,8 @@ public class UserController {
     }
 
     @PostMapping("/changePassword")
-    public ResponseEntity<?> changePassword(@RequestBody  PasswordVO passwordVO) {
-
+    public ResponseEntity<?> changePassword(@RequestBody @Valid PasswordVO passwordVO) {
+        System.out.println("TEST START !!!!!!!!! changePwd !!");
         return userService.changeUserPassword(passwordVO, session);
     }
 

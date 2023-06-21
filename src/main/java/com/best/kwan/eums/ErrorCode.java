@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
-    
+
     SUCCESS(HttpStatus.OK, "성공"),
     INVALID_AUTH_TOKEN(HttpStatus.UNAUTHORIZED, "권한 정보가 없는 토큰입니다."),
 
@@ -16,9 +16,12 @@ public enum ErrorCode {
     DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "데이터가 이미 존재합니다."),
 
     UNEXPECTED_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "예기치 못한 에러가 발생하였습니다."),
-    PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST ,"비밀번호가 맞지 않습니다." ),
-    PASSWORD_SAME(HttpStatus.BAD_REQUEST ,"이전 비밀번호와 동일합니다." );
+    PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호가 맞지 않습니다."),
+    PASSWORD_SAME(HttpStatus.BAD_REQUEST, "이전 비밀번호와 동일합니다."),
+
+    PASSWORD_CHECK(HttpStatus.BAD_REQUEST, "비밀번호는 대문자, 소문자, 숫자, 특수문자중 3가지를 포함해야합니다.");
 
     private final HttpStatus httpStatus;
     private final String msg;
+
 }
