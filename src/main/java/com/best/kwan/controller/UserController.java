@@ -67,21 +67,21 @@ public class UserController {
     //단건 수정 : patchMapping
     //전체 수정 : PutMapping
     // ORM 사용하는경우  Put으로 통일하는경우가 많음
-    @PutMapping("/{id}")
-    public String updateUser(@RequestBody UserVO userVO, @PathVariable Long id) {
-
-        boolean checkPwd = ValidationUtil.checkPwd(userVO.getPwd());
-        boolean checkEmail = ValidationUtil.checkEmail(userVO.getEmail());
-        if (!checkPwd) {
-            return "비밀번호 유효성 체크부탁드립니다.";
-        }
-        if (!checkEmail) {
-            return "이메일 유효성 체크부탁드립니다.";
-        }
-
-        userService.updateUser(userVO, session);
-        return "SUCCESS";
-    }
+//    @PutMapping("/{id}")
+//    public String updateUser(@RequestBody UserVO userVO, @PathVariable Long id) {
+//
+//        boolean checkPwd = ValidationUtil.checkPwd(userVO.getPwd());
+//        boolean checkEmail = ValidationUtil.checkEmail(userVO.getEmail());
+//        if (!checkPwd) {
+//            return "비밀번호 유효성 체크부탁드립니다.";
+//        }
+//        if (!checkEmail) {
+//            return "이메일 유효성 체크부탁드립니다.";
+//        }
+//
+//        userService.updateUser(userVO, session);
+//        return "SUCCESS";
+//    }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
@@ -97,9 +97,9 @@ public class UserController {
 
         return ResponseEntity.ok().body(loginReulst);
     }
-    @GetMapping("/{email}")
+    @GetMapping("/by-email/{email}")
     public UserVO getUser(@PathVariable String email) {
-        System.out.println("test : "+ email);
+        System.out.println("test Email: "+ email);
         return userService.getUserEmail(email);
     }
 
@@ -120,6 +120,17 @@ public class UserController {
             System.out.println("Session OUT!!!");
         }
         return "You have been logged out successfully";
+    }
+    @PutMapping
+    public String updateUser(@RequestBody UserVO userVO) {
+
+        System.out.println("TEST Update UserVO :: " + userVO);
+//        System.out.println("TEST Update email :: " + email);
+        String id = session.getId();
+        System.out.println("TEST sessipn Id :: " + id);
+//        userService.updateUser(userVO, session);
+//        userService.updateUser(userVO, id);
+        return "SUCCESS";
     }
 
 }

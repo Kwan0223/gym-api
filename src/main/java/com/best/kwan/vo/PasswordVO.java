@@ -11,8 +11,6 @@ public class PasswordVO {
 
     private String email;
 
-    private String oldPwd;
-
     @Password
     private String newPwd;
 

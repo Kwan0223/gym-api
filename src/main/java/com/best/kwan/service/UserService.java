@@ -122,4 +122,6 @@ public class UserService {
         return ResponseEntity.ok().body(ErrorCode.SUCCESS);
     }
 
+    public void updateUserProfile(UserVO user) {
+    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Product")
+@Table(name = "schedule")
 @Entity
 public class ScheduleEntity extends BaseEntity{
 
@@ -30,7 +30,7 @@ public class ScheduleEntity extends BaseEntity{
     private PointEntity point;
 
 
-    @OneToMany(mappedBy = " schedule", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
     private List<ReservationEntity> reservationEntities;
 
 }

@@ -34,6 +34,9 @@ public class UserEntity {
     @Column
     private String address;
 
+    @Column
+    private String imagePath;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ReservationEntity> reservationEntities;
 
@@ -47,5 +50,6 @@ public class UserEntity {
         this.number = uservo.getNumber();
         this.email = uservo.getEmail();
         this.address = uservo.getAddress();
+        this.imagePath = uservo.getImage();
     }
 }

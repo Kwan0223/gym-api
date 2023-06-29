@@ -14,7 +14,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Trainer")
+@Table(name = "trainer")
 @Entity
 public class TrainerEntity extends BaseEntity{
 
@@ -22,9 +22,6 @@ public class TrainerEntity extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trainerId;
 
-    @ManyToOne
-    @JoinColumn(name = "pointId")
-    private PointEntity point;
 
     @Column(length = 255)
     private String name;
@@ -37,14 +34,18 @@ public class TrainerEntity extends BaseEntity{
     @Column(length = 255)
     private String gender;
 
+    @ManyToOne
+    @JoinColumn(name = "pointId")
+    private PointEntity point;
 
 
     @ManyToOne
-    @JoinColumn(name = "pointId")
+    @JoinColumn(name = "reservationId")
     private ReservationEntity reservation;
 
-    @OneToMany(mappedBy = " trainer", cascade = CascadeType.ALL)
-    private List<PointEntity> pointEntities;
+//    @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL)
+//    private List<PointEntity> pointEntities;
+//
 
 
 
