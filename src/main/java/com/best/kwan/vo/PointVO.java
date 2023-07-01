@@ -42,8 +42,8 @@ public class PointVO {
 
     private List<String> pointImagePath;
 
-    private List<String> trainerInfo;
-
+//    private List<String> trainerInfo;
+private List<TrainerVO> trainerInfo;
     private List<String> productInfo;
     private List<String> scheduleInfo;
 
