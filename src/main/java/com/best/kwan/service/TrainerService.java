@@ -33,4 +33,12 @@ public class TrainerService {
                 .collect(Collectors.toList());
         return trainerList;
     }
+
+    public List<TrainerVO> getTrainersByPoint(PointEntity point) {
+        List<TrainerEntity> trainers = trainerRepository.findByPoint(point);
+        return trainers.stream()
+                .map(TrainerVO::new)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -51,17 +52,30 @@ public class PointEntity extends BaseEntity{
     private CompanyEntity company;
 
 
-    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
-    private List<PointImageEntity> pointImageEntities;
+//    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
+//    private List<PointImageEntity> pointImageEntities;
+//
+//    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
+//    private List<TrainerEntity> trainerEntities;
+//
+//    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
+//    private List<ProductEntity> productEntities;
+//
+//    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
+//    private List<ScheduleEntity> scheduleEntities;
 
     @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
-    private List<TrainerEntity> trainerEntities;
+    private Set<PointImageEntity> pointImageEntities;
 
     @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
-    private List<ProductEntity> productEntities;
+    private Set<TrainerEntity> trainerEntities;
 
     @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
-    private List<ScheduleEntity> scheduleEntities;
+    private Set<ProductEntity> productEntities;
+
+    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
+    private Set<ScheduleEntity> scheduleEntities;
+
 
 
     public PointEntity(PointVO pointVO){
