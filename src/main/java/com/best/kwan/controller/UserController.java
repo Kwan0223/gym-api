@@ -129,7 +129,6 @@ public class UserController {
         String id = session.getId();
         System.out.println("TEST sessipn Id :: " + id);
 //        userService.updateUser(userVO, session);
-//        userService.updateUser(userVO, id);
         return "SUCCESS";
     }
 

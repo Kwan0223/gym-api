@@ -25,8 +25,6 @@ public class TrainerService {
     public List<TrainerVO> getTrainerList() {
 
         List<TrainerEntity> trainers = trainerRepository.findAll();
-//        List<TrainerEntity> trainer = trainerRepository.findById(pointId);
-
 
         List<TrainerVO> trainerList = trainers.stream()
                 .map(TrainerVO :: new)
@@ -36,6 +34,7 @@ public class TrainerService {
 
     public List<TrainerVO> getTrainersByPoint(PointEntity point) {
         List<TrainerEntity> trainers = trainerRepository.findByPoint(point);
+
         return trainers.stream()
                 .map(TrainerVO::new)
                 .collect(Collectors.toList());

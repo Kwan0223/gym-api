@@ -13,15 +13,11 @@ import java.util.Optional;
 public interface PointRepository extends JpaRepository<PointEntity, Long> {
 
     @Override
-//    @EntityGraph(attributePaths = {"pointImageEntities"})
     @EntityGraph(attributePaths = {"pointImageEntities", "trainerEntities"})
-
-//    List<PointEntity> findAll();
     Page<PointEntity> findAll(Pageable pageable);
 
 
 
-//    List<PointEntity> findAllByPointNameContaining(String pointName);
     Page<PointEntity> findAllByPointNameContaining(String pointName, Pageable pageable);
 
 

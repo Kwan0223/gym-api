@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -45,7 +46,7 @@ public class TrainerEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL)
     private List<TrainerImageEntity> trainerImageEntities;
-//
+
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL)
     private List<TrainerHistoryEntity> trainerHistoryEntities;
 
@@ -57,5 +58,4 @@ public class TrainerEntity extends BaseEntity {
         this.createAt = trainerVO.getCreateAt();
         this.updateAt = trainerVO.getUpdateAt();
     }
-
 }

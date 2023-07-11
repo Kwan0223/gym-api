@@ -25,15 +25,6 @@ public class PointService {
     private final TrainerService trainerService;
 
 
-
-
-
-//    public Page<PointVO> getPointList(Pageable pageable) throws JsonProcessingException {
-//
-//        Page<PointEntity> resultList  = pointRepository.findAll(pageable);
-//
-//        return resultList.map(PointVO::new);
-//    }
 public Page<PointVO> getPointList(Pageable pageable) {
     Page<PointEntity> pointPage = pointRepository.findAll(pageable);
     List<PointVO> pointList = pointPage.getContent().stream()

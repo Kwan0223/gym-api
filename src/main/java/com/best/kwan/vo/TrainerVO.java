@@ -41,14 +41,7 @@ public class TrainerVO {
         }).collect(Collectors.toList());
         this.trainerHistory = trainerEntity.getTrainerHistoryEntities().stream()
                 .map(historyEntity -> {
-                    StringBuilder historyBuilder = new StringBuilder();
-                    historyBuilder.append(historyEntity.getHistory1());
-                    historyBuilder.append(historyEntity.getHistory2());
-                    historyBuilder.append(historyEntity.getHistory3());
-                    historyBuilder.append(historyEntity.getHistory4());
-                    historyBuilder.append(historyEntity.getHistory5());
-
-                    return historyBuilder.toString();
+                    return historyEntity.getHistory();
                 })
                 .collect(Collectors.toList());
 
