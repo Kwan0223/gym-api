@@ -37,7 +37,7 @@ public class TrainerVO {
         this.updateAt = trainerEntity.getUpdateAt();
         this.trainerImage = trainerEntity.getTrainerImageEntities().stream().map((trainerImageEntity) ->
         {
-            return trainerImageEntity.getTrainerPath();
+            return trainerImageEntity.getPath();
         }).collect(Collectors.toList());
         this.trainerHistory = trainerEntity.getTrainerHistoryEntities().stream()
                 .map(historyEntity -> {

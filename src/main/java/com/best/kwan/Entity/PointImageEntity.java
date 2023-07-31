@@ -11,20 +11,20 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "PointImage")
+@Table(name = "point_image")
 @Entity
 public class PointImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long PointImageId;
-    @Column(length = 20000)
+
+    @Column(columnDefinition = "TEXT")
     private String path;
 
     @ManyToOne
-    @JoinColumn(name = "pointId")
+    @JoinColumn(name = "point_id")
     private PointEntity point;
-
 
     public PointImageEntity(PointImageVO pointImageVO){
         this.PointImageId = pointImageVO.getPointImageId();

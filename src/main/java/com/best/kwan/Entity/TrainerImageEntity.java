@@ -10,20 +10,21 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "trainerImage")
+@Table(name = "trainer_image")
 @Entity
 public class TrainerImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "trainer_image_id")
     private Long trainerImageId;
 
-
-    @Column(length = 20000)
-    private String trainerPath;
+    @Column(columnDefinition = "TEXT")
+    private String path;
 
     @ManyToOne
-    @JoinColumn(name = "trainerId")
+    @JoinColumn(name = "trainer_id")
     private TrainerEntity trainer;
+
 
 }

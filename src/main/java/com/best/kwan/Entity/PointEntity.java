@@ -24,7 +24,6 @@ public class PointEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pointId;
-//    private Long companyId;
 
     @Column(length = 255)
     private String pointName;
