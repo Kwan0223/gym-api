@@ -40,8 +40,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ReservationEntity> reservationEntities;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<PaymentEntity> paymentEntities;
+
 
     public UserEntity(UserVO uservo) {
 

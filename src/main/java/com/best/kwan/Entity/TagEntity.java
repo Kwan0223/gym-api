@@ -1,37 +1,33 @@
 package com.best.kwan.Entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Product")
+@Table(name = "tag")
 @Entity
-public class ProductEntity extends BaseEntity{
+public class TagEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
+    private Long tagId;
 
     @Column(length = 255)
-    private String name;
+    private String content;
 
 
-    @Column(length = 255)
-    private Long  price;
+
 
 
     @ManyToOne
     @JoinColumn(name = "pointId")
     private PointEntity point;
+
 
 
 

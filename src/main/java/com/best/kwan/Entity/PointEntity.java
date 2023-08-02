@@ -4,6 +4,7 @@ import com.best.kwan.vo.PointVO;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.w3c.dom.Text;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -43,12 +44,11 @@ public class PointEntity extends BaseEntity{
     @Column(length = 255)
     private String pointUrl;
 
+    @Column(columnDefinition = "TEXT")
+    private String info;
 
 
 
-    @ManyToOne
-    @JoinColumn(name = "companyId")
-    private CompanyEntity company;
 
 
 //    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)

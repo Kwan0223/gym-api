@@ -42,28 +42,27 @@ public class PointVO {
 
     private List<String> pointImagePath;
 
-//    private List<String> trainerInfo;
-private List<TrainerVO> trainerInfo;
+    private List<TrainerVO> trainerInfo;
     private List<String> productInfo;
     private List<String> scheduleInfo;
 
 
-  public PointVO(PointEntity pointEntity){
-      this.pointId = pointEntity.getPointId();
-      this.pointName = pointEntity.getPointName();
-      this.managerName = pointEntity.getManagerName();
-      this.managerPhone = pointEntity.getManagerPhone();
-      this.email = pointEntity.getEmail();
-      this.pwd = pointEntity.getPwd();
-      this.createAt = pointEntity.getCreateAt();
-      this.updateAt = pointEntity.getUpdateAt();
-      this.pointAddress = pointEntity.getPointAddress();
-      this.pointUrl  = pointEntity.getPointUrl();
-      this.pointImagePath = pointEntity.getPointImageEntities().stream().map((pointImageEntity) ->
-      {
-        return pointImageEntity.getPath();
-      }).collect(Collectors.toList());
+    public PointVO(PointEntity pointEntity) {
+        this.pointId = pointEntity.getPointId();
+        this.pointName = pointEntity.getPointName();
+        this.managerName = pointEntity.getManagerName();
+        this.managerPhone = pointEntity.getManagerPhone();
+        this.email = pointEntity.getEmail();
+        this.pwd = pointEntity.getPwd();
+        this.createAt = pointEntity.getCreateAt();
+        this.updateAt = pointEntity.getUpdateAt();
+        this.pointAddress = pointEntity.getPointAddress();
+        this.pointUrl = pointEntity.getPointUrl();
+        this.pointImagePath = pointEntity.getPointImageEntities().stream().map((pointImageEntity) ->
+        {
+            return pointImageEntity.getPath();
+        }).collect(Collectors.toList());
 
 
-  }
+    }
 }

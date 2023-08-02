@@ -16,7 +16,6 @@ public class TrainerImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "trainer_image_id")
     private Long trainerImageId;
 
     @Column(columnDefinition = "TEXT")

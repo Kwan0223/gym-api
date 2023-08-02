@@ -40,6 +40,15 @@ public Page<PointVO> getPointList(Pageable pageable) {
 
     public Page<PointVO> searchPointList(String pointName, Pageable pageable) {
         Page<PointEntity> searchResult = pointRepository.findAllByPointNameContaining(pointName, pageable);
-        return searchResult.map(PointVO::new);
+
+        List<PointVO> pointList = searchResult.getContent().stream()
+                .map(point -> {
+                    PointVO pointVO = new PointVO(point);
+                    List<TrainerVO> trainerList = trainerService.getTrainersByPoint(point);
+                    pointVO.setTrainerInfo(trainerList);
+                    return pointVO;
+                })
+                .collect(Collectors.toList());
+        return new PageImpl<>(pointList, pageable, searchResult.getTotalElements());
     }
 }

@@ -17,7 +17,7 @@ public class PointImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long PointImageId;
+    private Long pointImageId;
 
     @Column(columnDefinition = "TEXT")
     private String path;
@@ -27,7 +27,7 @@ public class PointImageEntity {
     private PointEntity point;
 
     public PointImageEntity(PointImageVO pointImageVO){
-        this.PointImageId = pointImageVO.getPointImageId();
+        this.pointImageId = pointImageVO.getPointImageId();
         this.path = pointImageVO.getPath();
     }
 
