@@ -21,9 +21,6 @@ public class TagEntity extends BaseEntity{
     private String content;
 
 
-
-
-
     @ManyToOne
     @JoinColumn(name = "pointId")
     private PointEntity point;

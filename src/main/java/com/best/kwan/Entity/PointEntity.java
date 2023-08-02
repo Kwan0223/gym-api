@@ -75,6 +75,9 @@ public class PointEntity extends BaseEntity{
     @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
     private Set<ScheduleEntity> scheduleEntities;
 
+    @OneToMany(mappedBy = "point" , cascade = CascadeType.ALL)
+    private Set<TagEntity> tagEntities;
+
 
 
     public PointEntity(PointVO pointVO){
@@ -88,6 +91,7 @@ public class PointEntity extends BaseEntity{
         this.updateAt = pointVO.getUpdateAt();
         this.pointAddress = pointVO.getPointAddress();
         this.pointUrl = pointVO.getPointUrl();
+        this.info = pointVO.getInfo();
 
     }
 }

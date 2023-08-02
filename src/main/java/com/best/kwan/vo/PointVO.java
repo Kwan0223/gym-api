@@ -1,6 +1,8 @@
 package com.best.kwan.vo;
 
 import com.best.kwan.Entity.PointEntity;
+import com.best.kwan.Entity.ProductEntity;
+import com.best.kwan.Entity.TagEntity;
 import com.best.kwan.Entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,11 +42,15 @@ public class PointVO {
 
     private String pointUrl;
 
+    private String info;
+
     private List<String> pointImagePath;
 
     private List<TrainerVO> trainerInfo;
     private List<String> productInfo;
     private List<String> scheduleInfo;
+
+    private List<String> tagInfo;
 
 
     public PointVO(PointEntity pointEntity) {
@@ -58,11 +64,13 @@ public class PointVO {
         this.updateAt = pointEntity.getUpdateAt();
         this.pointAddress = pointEntity.getPointAddress();
         this.pointUrl = pointEntity.getPointUrl();
+        this.info = pointEntity.getInfo();
         this.pointImagePath = pointEntity.getPointImageEntities().stream().map((pointImageEntity) ->
         {
             return pointImageEntity.getPath();
         }).collect(Collectors.toList());
-
+        this.tagInfo = pointEntity.getTagEntities().stream().map(TagEntity::getContent).collect(Collectors.toList());
+        this.productInfo = pointEntity.getProductEntities().stream().map(product -> product.getName() + " : " + product.getPrice()).collect(Collectors.toList());
 
     }
 }

@@ -24,9 +24,8 @@ public class ProductEntity extends BaseEntity{
     @Column(length = 255)
     private String name;
 
-
     @Column(length = 255)
-    private Long  price;
+    private String  price;
 
 
     @ManyToOne
