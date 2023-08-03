@@ -21,6 +21,7 @@ public class ReservationEntity extends BaseEntity{
     @Column(length = 255)
     private LocalDateTime reservationDate;
 
+
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserEntity user;

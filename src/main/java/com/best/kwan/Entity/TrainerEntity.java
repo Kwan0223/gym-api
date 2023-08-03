@@ -58,4 +58,5 @@ public class TrainerEntity extends BaseEntity {
         this.createAt = trainerVO.getCreateAt();
         this.updateAt = trainerVO.getUpdateAt();
     }
+
 }

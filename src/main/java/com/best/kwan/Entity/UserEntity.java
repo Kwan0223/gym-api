@@ -1,6 +1,7 @@
 package com.best.kwan.Entity;
 
 import com.best.kwan.vo.UserVO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,7 +37,6 @@ public class UserEntity {
 
     @Column
     private String imagePath;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ReservationEntity> reservationEntities;
 
