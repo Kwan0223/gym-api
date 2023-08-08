@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,9 @@ public class ReservationService {
         schedule.setEndTime(reservationVO.getEndTime());
         schedule = scheduleRepository.save(schedule);
 
+        System.out.println("TEST startTime ::: " + schedule.getStartTime());
+        System.out.println("TEST endTime ::: " + schedule.getEndTime());
+
         ReservationEntity reservation = new ReservationEntity();
         reservation.setUser(user);
         reservation.setTrainer(trainer);
@@ -51,6 +55,8 @@ public class ReservationService {
         reservation.setReservationDate(reservationVO.getDate());
 
         reservation = reservationRepository.save(reservation);
+        System.out.println("TEST reservationDate ::: " + reservation.getReservationDate());
+
 
         // 생성된 예약을 ReservationVO로 변환
         ReservationVO responseVO = new ReservationVO();
@@ -63,5 +69,26 @@ public class ReservationService {
 
 
         return responseVO;
+    }
+
+    public List<ReservationVO> getReservationsByDateAndTrainer(LocalDateTime date, Long trainerId) {
+        List<ReservationEntity> reservations = reservationRepository.findByReservationDateAndTrainerTrainerId(date, trainerId);
+
+        return reservations.stream()
+                .map(this::convertEntityToVO)
+                .collect(Collectors.toList());
+    }
+
+    private ReservationVO convertEntityToVO(ReservationEntity entity) {
+        ReservationVO vo = new ReservationVO();
+        vo.setReservationId(entity.getReservationId());
+        vo.setTrainerId(entity.getTrainer().getTrainerId());
+        vo.setScheduleId(entity.getSchedule().getScheduleId());
+        vo.setUserId(entity.getUser().getId());
+        vo.setDate(entity.getReservationDate());
+        vo.setStartTime(entity.getSchedule().getStartTime());
+        vo.setEndTime(entity.getSchedule().getEndTime());
+
+        return vo;
     }
 }

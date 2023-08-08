@@ -18,7 +18,7 @@ public class ReservationEntity extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
 
-    @Column(length = 255)
+    @Column(length = 255, columnDefinition="TIMESTAMP WITH TIME ZONE")
     private LocalDateTime reservationDate;
 
 

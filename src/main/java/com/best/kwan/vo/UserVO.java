@@ -10,6 +10,8 @@ import lombok.*;
 @NoArgsConstructor
 public class UserVO {
 
+    private Long userId;
+
     private String name;
 
     @Password
@@ -24,6 +26,7 @@ public class UserVO {
     private String image;
 
     public UserVO(UserEntity userEntity){
+        this.userId = getUserId();
         this.name = userEntity.getName();
         this.pwd =  userEntity.getPwd();
         this.number = userEntity.getNumber();
@@ -34,6 +37,7 @@ public class UserVO {
     public static UserVO toUserVO (UserEntity userEntity){
 
         UserVO userVO =  new UserVO();
+        userVO.setUserId(userEntity.getId());
         userVO.setName(userEntity.getName());
         userVO.setPwd(userEntity.getPwd());
         userVO.setEmail(userEntity.getEmail());

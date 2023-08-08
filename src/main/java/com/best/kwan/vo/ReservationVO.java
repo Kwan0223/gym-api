@@ -25,8 +25,10 @@ public class ReservationVO {
 
     private LocalDateTime date;
 
-    private LocalDateTime startTime;
+//    private LocalDateTime startTime;
+    private String startTime;
 
-    private LocalDateTime endTime;
+//    private LocalDateTime endTime;
+    private String endTime;
 
 }
