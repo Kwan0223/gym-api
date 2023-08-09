@@ -73,10 +73,7 @@ public class ReservationService {
 
     public List<ReservationVO> getReservationsByDateAndTrainer(LocalDateTime date, Long trainerId) {
         List<ReservationEntity> reservations = reservationRepository.findByReservationDateAndTrainerTrainerId(date, trainerId);
-
-        return reservations.stream()
-                .map(this::convertEntityToVO)
-                .collect(Collectors.toList());
+        return reservations.stream().map(this::convertEntityToVO).collect(Collectors.toList());
     }
 
     private ReservationVO convertEntityToVO(ReservationEntity entity) {

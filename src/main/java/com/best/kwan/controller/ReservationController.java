@@ -46,18 +46,10 @@ public class ReservationController {
         return ResponseEntity.ok(reservations);
     }
 
-
     public LocalDateTime convertStringToLocalDateTime(String str) {
-        SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z");
-        try {
-            Date date = format.parse(str);
-            return LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.out.println("TEST OUT");
-            return null;
-        }
-
-
+        return LocalDateTime.parse(str, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
+
+
+
 }
