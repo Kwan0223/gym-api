@@ -1,14 +1,9 @@
 package com.best.kwan.service;
 
 
-import com.best.kwan.Entity.ReservationEntity;
-import com.best.kwan.Entity.ScheduleEntity;
-import com.best.kwan.Entity.TrainerEntity;
-import com.best.kwan.Entity.UserEntity;
-import com.best.kwan.Repository.ReservationRepository;
-import com.best.kwan.Repository.ScheduleRepository;
-import com.best.kwan.Repository.TrainerRepository;
-import com.best.kwan.Repository.UserRepository;
+import com.best.kwan.Entity.*;
+import com.best.kwan.Repository.*;
+import com.best.kwan.eums.NotificationCode;
 import com.best.kwan.vo.ReservationVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +17,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReservationService {
 
-
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private TrainerRepository trainerRepository;
-
-    @Autowired
     private ScheduleRepository scheduleRepository;
-
-    @Autowired
     private ReservationRepository reservationRepository;
+
+    private NotificationRepository  notificationRepository;
 
     public ReservationVO createReservation(ReservationVO reservationVO) {
         UserEntity user = userRepository.findById(reservationVO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
@@ -66,6 +55,15 @@ public class ReservationService {
         responseVO.setDate(reservation.getReservationDate());
         responseVO.setStartTime(reservation.getSchedule().getStartTime());
         responseVO.setEndTime(reservation.getSchedule().getEndTime());
+
+        //예약 완료 알림 생성
+        NotificationEntity notification = new NotificationEntity();
+        notification.setTrainer(reservation.getTrainer());
+        notification.setUser(reservation.getUser());
+        notification.setCheckYn(false);
+        notification.setContent(user.getName() + NotificationCode.RESERVATION_APPLICATION.getMsg());
+        notification.setCode(NotificationCode.RESERVATION_APPLICATION);
+        notificationRepository.save(notification);
 
 
         return responseVO;

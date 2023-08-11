@@ -1,5 +1,6 @@
 package com.best.kwan.Entity;
 
+import com.best.kwan.eums.NotificationCode;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,8 +18,9 @@ public class NotificationEntity extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long noticeId;
 
-    @Column(length = 255)
+    @Column(nullable = false, length = 255)
     private String content;
+
 
     @Column
     private Boolean checkYn;
@@ -30,6 +32,10 @@ public class NotificationEntity extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserEntity user;
+
+    @Column
+//    @Enumerated(EnumType.STRING)
+    private NotificationCode code;
 
 
 
