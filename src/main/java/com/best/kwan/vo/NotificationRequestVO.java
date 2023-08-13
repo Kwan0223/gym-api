@@ -5,13 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.management.Notification;
-
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateNotificationRequestVO {
+public class NotificationRequestVO {
 
   private Long trainerId;
 

@@ -2,6 +2,7 @@ package com.best.kwan.Entity;
 
 
 import com.best.kwan.vo.PointImageVO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;

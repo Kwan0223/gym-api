@@ -1,5 +1,6 @@
 package com.best.kwan.vo;
 
+import com.best.kwan.Entity.ReservationEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +16,6 @@ public class ReservationVO {
 
     private Long reservationId;
 
-    private Long pointId;
-
     private Long trainerId;
 
     private Long scheduleId;
@@ -25,10 +24,24 @@ public class ReservationVO {
 
     private LocalDateTime date;
 
-//    private LocalDateTime startTime;
     private String startTime;
 
-//    private LocalDateTime endTime;
     private String endTime;
 
+    public static ReservationVO fromEntity(ReservationEntity reservationEntity) {
+        ReservationVO reservationVO = new ReservationVO();
+        reservationVO.setReservationId(reservationEntity.getReservationId());
+        reservationVO.setTrainerId(reservationEntity.getTrainer().getTrainerId());
+        reservationVO.setScheduleId(reservationEntity.getSchedule().getScheduleId());
+        reservationVO.setUserId(reservationEntity.getUser().getId());
+        reservationVO.setDate(reservationEntity.getReservationDate());
+        reservationVO.setStartTime(reservationEntity.getSchedule().getStartTime());
+        reservationVO.setEndTime(reservationEntity.getSchedule().getEndTime());
+
+        return reservationVO;
+
+    }
+
+
 }
+

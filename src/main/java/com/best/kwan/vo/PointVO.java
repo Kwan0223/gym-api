@@ -4,6 +4,7 @@ import com.best.kwan.Entity.PointEntity;
 import com.best.kwan.Entity.ProductEntity;
 import com.best.kwan.Entity.TagEntity;
 import com.best.kwan.Entity.UserEntity;
+import com.best.kwan.Entity.PointImageEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,6 +54,27 @@ public class PointVO {
     private List<String> tagInfo;
 
 
+//    public PointVO(PointEntity pointEntity) {
+//        this.pointId = pointEntity.getPointId();
+//        this.pointName = pointEntity.getPointName();
+//        this.managerName = pointEntity.getManagerName();
+//        this.managerPhone = pointEntity.getManagerPhone();
+//        this.email = pointEntity.getEmail();
+//        this.pwd = pointEntity.getPwd();
+//        this.createAt = pointEntity.getCreateAt();
+//        this.updateAt = pointEntity.getUpdateAt();
+//        this.pointAddress = pointEntity.getPointAddress();
+//        this.pointUrl = pointEntity.getPointUrl();
+//        this.info = pointEntity.getInfo();
+//        this.pointImagePath = pointEntity.getPointImageEntities().stream().map((pointImageEntity) ->
+//        {
+//            return pointImageEntity.getPath();
+//        }).collect(Collectors.toList());
+//        this.tagInfo = pointEntity.getTagEntities().stream().map(TagEntity::getContent).collect(Collectors.toList());
+//        this.productInfo = pointEntity.getProductEntities().stream().map(product -> product.getName() + " : " + product.getPrice()).collect(Collectors.toList());
+//
+//    }
+
     public PointVO(PointEntity pointEntity) {
         this.pointId = pointEntity.getPointId();
         this.pointName = pointEntity.getPointName();
@@ -65,10 +87,9 @@ public class PointVO {
         this.pointAddress = pointEntity.getPointAddress();
         this.pointUrl = pointEntity.getPointUrl();
         this.info = pointEntity.getInfo();
-        this.pointImagePath = pointEntity.getPointImageEntities().stream().map((pointImageEntity) ->
-        {
-            return pointImageEntity.getPath();
-        }).collect(Collectors.toList());
+        this.pointImagePath = pointEntity.getPointImageEntities().stream()
+                .map(PointImageEntity::getPath)
+                .collect(Collectors.toList());
         this.tagInfo = pointEntity.getTagEntities().stream().map(TagEntity::getContent).collect(Collectors.toList());
         this.productInfo = pointEntity.getProductEntities().stream().map(product -> product.getName() + " : " + product.getPrice()).collect(Collectors.toList());
 

@@ -20,11 +20,9 @@ public class ScheduleEntity extends BaseEntity{
     private Long scheduleId;
 
     @Column(length = 255)
-//    private LocalDateTime startTime;
     private String startTime;
 
     @Column(length = 255)
-//    private LocalDateTime endTime;
     private String endTime;
 
     @ManyToOne

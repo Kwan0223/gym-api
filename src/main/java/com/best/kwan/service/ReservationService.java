@@ -17,12 +17,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReservationService {
 
-    private UserRepository userRepository;
-    private TrainerRepository trainerRepository;
-    private ScheduleRepository scheduleRepository;
-    private ReservationRepository reservationRepository;
+    private final UserRepository userRepository;
+    private final TrainerRepository trainerRepository;
+    private final ScheduleRepository scheduleRepository;
+    private final ReservationRepository reservationRepository;
+    private final NotificationRepository  notificationRepository;
 
-    private NotificationRepository  notificationRepository;
+    private final NotificationService notificationService;
+
 
     public ReservationVO createReservation(ReservationVO reservationVO) {
         UserEntity user = userRepository.findById(reservationVO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
@@ -65,25 +67,17 @@ public class ReservationService {
         notification.setCode(NotificationCode.RESERVATION_APPLICATION);
         notificationRepository.save(notification);
 
+        notificationService.sendNotificationToUser(notification, user.getId());
+
+
 
         return responseVO;
     }
 
     public List<ReservationVO> getReservationsByDateAndTrainer(LocalDateTime date, Long trainerId) {
         List<ReservationEntity> reservations = reservationRepository.findByReservationDateAndTrainerTrainerId(date, trainerId);
-        return reservations.stream().map(this::convertEntityToVO).collect(Collectors.toList());
+        return reservations.stream().map(ReservationVO::fromEntity).collect(Collectors.toList());
     }
 
-    private ReservationVO convertEntityToVO(ReservationEntity entity) {
-        ReservationVO vo = new ReservationVO();
-        vo.setReservationId(entity.getReservationId());
-        vo.setTrainerId(entity.getTrainer().getTrainerId());
-        vo.setScheduleId(entity.getSchedule().getScheduleId());
-        vo.setUserId(entity.getUser().getId());
-        vo.setDate(entity.getReservationDate());
-        vo.setStartTime(entity.getSchedule().getStartTime());
-        vo.setEndTime(entity.getSchedule().getEndTime());
 
-        return vo;
-    }
 }
