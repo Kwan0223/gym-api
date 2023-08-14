@@ -1,17 +1,12 @@
 package com.best.kwan.service;
 
 
-import com.best.kwan.Entity.ReservationEntity;
-import com.best.kwan.Entity.ScheduleEntity;
-import com.best.kwan.Entity.TrainerEntity;
-import com.best.kwan.Entity.UserEntity;
-import com.best.kwan.Repository.ReservationRepository;
-import com.best.kwan.Repository.ScheduleRepository;
-import com.best.kwan.Repository.TrainerRepository;
-import com.best.kwan.Repository.UserRepository;
+import com.best.kwan.Entity.*;
+import com.best.kwan.Repository.*;
+import com.best.kwan.eums.NotificationCode;
+import com.best.kwan.vo.NotificationRequestVO;
 import com.best.kwan.vo.ReservationVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,19 +16,17 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
+    private final UserRepository userRepository;
 
+    private final TrainerRepository trainerRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final ScheduleRepository scheduleRepository;
 
-    @Autowired
-    private TrainerRepository trainerRepository;
+    private final ReservationRepository reservationRepository;
 
-    @Autowired
-    private ScheduleRepository scheduleRepository;
+    private final NotificationRepository notificationRepository;
 
-    @Autowired
-    private ReservationRepository reservationRepository;
+    private final  NotificationService notificationService;
 
     public ReservationVO createReservation(ReservationVO reservationVO) {
         UserEntity user = userRepository.findById(reservationVO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
@@ -67,6 +60,24 @@ public class ReservationService {
         responseVO.setStartTime(reservation.getSchedule().getStartTime());
         responseVO.setEndTime(reservation.getSchedule().getEndTime());
 
+        // 예약 완료 알림 생성 및 추가
+        NotificationEntity notification = new NotificationEntity();
+        notification.setTrainer(reservation.getTrainer());
+        notification.setUser(reservation.getUser());
+        notification.setCheckYn(false);
+        notification.setContent(user.getName() + NotificationCode.RESERVATION_APPLICATION.getMsg());
+        notification.setCode(NotificationCode.RESERVATION_APPLICATION);
+        notificationRepository.save(notification);
+
+        NotificationRequestVO requestVO = new NotificationRequestVO();
+        requestVO.setUserId(notification.getUser().getId());
+        requestVO.setNotificationCode(notification.getCode());
+        requestVO.setTrainerId(notification.getTrainer().getTrainerId());
+        requestVO.setContent(notification.getContent());
+        requestVO.setCheckYn(notification.getCheckYn());
+
+
+        notificationService.sendNotificationToUser(requestVO);
 
         return responseVO;
     }

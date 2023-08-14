@@ -1,5 +1,6 @@
 package com.best.kwan.Entity;
 
+import com.best.kwan.eums.NotificationCode;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +31,10 @@ public class NotificationEntity extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserEntity user;
+
+
+    @Column
+    private NotificationCode code;
 
 
 
