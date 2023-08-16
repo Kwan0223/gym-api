@@ -1,14 +1,12 @@
 package com.best.kwan.vo;
 
 import com.best.kwan.eums.NotificationCode;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotificationRequestVO {

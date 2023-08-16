@@ -75,6 +75,7 @@ public class ReservationService {
         requestVO.setTrainerId(notification.getTrainer().getTrainerId());
         requestVO.setContent(notification.getContent());
         requestVO.setCheckYn(notification.getCheckYn());
+        System.out.println("TEST RequestVO ::::::: " + requestVO);
 
 
         notificationService.sendNotificationToUser(requestVO);

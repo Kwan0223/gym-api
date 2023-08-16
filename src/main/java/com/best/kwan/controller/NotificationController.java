@@ -6,6 +6,7 @@ import com.best.kwan.Entity.TrainerEntity;
 import com.best.kwan.Entity.UserEntity;
 import com.best.kwan.Repository.TrainerRepository;
 import com.best.kwan.Repository.UserRepository;
+import com.best.kwan.eums.NotificationCode;
 import com.best.kwan.service.NotificationService;
 import com.best.kwan.vo.NotificationResponseVO;
 import lombok.RequiredArgsConstructor;
@@ -24,33 +25,37 @@ import java.util.Optional;
 public class NotificationController {
 
     private final NotificationService notificationService;
-    private final UserRepository userRepository;
 
-    private final TrainerRepository trainerRepository;
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<NotificationResponseVO>> getNotificationsByUser(@PathVariable Long userId) {
-        Optional<UserEntity> userOptional = userRepository.findById(userId);
-
-        if (!userOptional.isPresent()) {
+        List<NotificationResponseVO> notifications = notificationService.getNotificationsByUserId(userId);
+        if (notifications == null) {
             return ResponseEntity.notFound().build();
         }
-        UserEntity user = userOptional.get();
-        List<NotificationResponseVO> notifications = notificationService.getNotificationsByUser(user);
         return ResponseEntity.ok(notifications);
     }
 
     @GetMapping("/trainer/{trainerId}")
-    public ResponseEntity<List<NotificationEntity>> getNotificationsByTrainer(@PathVariable Long trainerId) {
-        Optional<TrainerEntity> trainerOptional = trainerRepository.findById(trainerId);
-
-        if(!trainerOptional.isPresent()){
-            return  ResponseEntity.notFound().build();
+    public ResponseEntity<List<NotificationResponseVO>> getNotificationsByTrainer(@PathVariable Long trainerId) {
+        List<NotificationResponseVO> notifications = notificationService.getNotificationsByTrainerId(trainerId);
+        if (notifications == null) {
+            return ResponseEntity.notFound().build();
         }
-
-        TrainerEntity trainer = trainerOptional.get();
-        List<NotificationEntity> notifications = notificationService.getNotificationsByTrainer(trainer);
         return ResponseEntity.ok(notifications);
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<NotificationResponseVO>> test (@PathVariable Long userId){
+//        return notificationService.getNotifications(userId);
+//
+//    }
+
+//    @GetMapping("/{id}")
+//    public ResponseEntity<List<NotificationResponseVO>> getNotifications(@PathVariable Long id) {
+//         NotificationCode test =
+//
+//            return ResponseEntity.ok(notifications);
+//        }
 }
+
 
