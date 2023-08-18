@@ -19,10 +19,12 @@ public void registerStompEndpoints(StompEndpointRegistry registry) {
 }
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.setUserDestinationPrefix("/user");
         registry.setApplicationDestinationPrefixes("/app");
         registry.enableSimpleBroker("/topic", "/queue", "/user");
 
     }
+
 }
 
 

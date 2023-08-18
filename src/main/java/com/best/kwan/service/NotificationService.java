@@ -13,8 +13,11 @@ import com.best.kwan.vo.NotificationResponseVO;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUser;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +36,11 @@ public class NotificationService {
 
     private final UserRepository userRepository;
     private final TrainerRepository trainerRepository;
+
+    //test
+    private final SimpUserRegistry userRegistry;
+
+    private final HttpSession session;
 
 
     public List<NotificationResponseVO> getNotificationsByUserId(Long userId) {
@@ -56,21 +64,27 @@ public class NotificationService {
     }
 
     public void sendNotificationToUser(NotificationRequestVO requestVO) {
+        for (SimpUser user : userRegistry.getUsers()) {
+            System.out.println("User: " + user.getName() + ", Sessions: " + user.getSessions().size());
+        }
         System.out.println("TEST !!! Send Start ::  " );
         System.out.println("TEST !!! Send Start ::  " + requestVO );
+        System.out.println("TEST !!! Send status ::  " + session );
         NotificationCode code = requestVO.getNotificationCode();
+        String  test = requestVO.getContent();
         System.out.println("TEST !!! NotificationCode ::  " + code );
         System.out.println("TEST !!! getUserId ::  " + requestVO.getUserId() );
         if (code.equals(NotificationCode.RESERVATION_APPLICATION)) {
         System.out.println("TEST !!! convertAndSendToUser ::  " + code );
-//            messagingTemplate.convertAndSend("/topic/notifications", requestVO);
+            messagingTemplate.convertAndSend("/topic/notifications", requestVO);
 
-            messagingTemplate.convertAndSendToUser(
-                    String.valueOf(requestVO.getUserId()),
-                    "/topic/notifications", // '/user/{userId}' 접두사는 자동으로 추가됩니다.
-                    requestVO
-            );
+//            messagingTemplate.convertAndSendToUser(
+//                    String.valueOf(requestVO.getUserId()),
+//                    "/topic/notifications",
+//                    requestVO
+//            );
             System.out.println("TEST !!! End Start ::  " + requestVO );
+            System.out.println("TEST !!! End  test Start ::  " + test );
 
         } else {
             System.out.println("TEST !!! convertAndSendToTrainer ::  " + code );
