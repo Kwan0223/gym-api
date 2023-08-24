@@ -28,6 +28,8 @@ public class ReservationService {
 
     private final  NotificationService notificationService;
 
+
+
     public ReservationVO createReservation(ReservationVO reservationVO) {
         UserEntity user = userRepository.findById(reservationVO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
         TrainerEntity trainer = trainerRepository.findById(reservationVO.getTrainerId()).orElseThrow(() -> new RuntimeException("Trainer not found"));
@@ -77,6 +79,8 @@ public class ReservationService {
         requestVO.setCheckYn(notification.getCheckYn());
         System.out.println("TEST RequestVO ::::::: " + requestVO);
 
+
+//        notificationService.sendNotificationToUser(requestVO);
 
         notificationService.sendNotificationToUser(requestVO);
 
