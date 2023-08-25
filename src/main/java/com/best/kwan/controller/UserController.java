@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -92,8 +91,17 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<UserVO> login(@RequestBody  UserVO userVO) {
+//    public ResponseEntity<UserVO> login(@RequestBody  UserVO userVO ,HttpSession session ) {
 
         UserVO loginReulst = userService.login(userVO , session);
+
+        if (loginReulst != null) {
+            session.setAttribute("user", loginReulst);
+            System.out.println("test !!! LoginResult :: " + loginReulst);
+            System.out.println("TEST !!! Login Session User : " + session.getAttribute("user"));
+
+        }
+        System.out.println("Login Session ID: " + session.getId());
 
         return ResponseEntity.ok().body(loginReulst);
     }

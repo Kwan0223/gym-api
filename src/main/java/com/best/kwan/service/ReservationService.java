@@ -31,8 +31,8 @@ public class ReservationService {
 
 
     public ReservationVO createReservation(ReservationVO reservationVO) {
-        UserEntity user = userRepository.findById(reservationVO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
-        TrainerEntity trainer = trainerRepository.findById(reservationVO.getTrainerId()).orElseThrow(() -> new RuntimeException("Trainer not found"));
+            UserEntity user = userRepository.findById(reservationVO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+            TrainerEntity trainer = trainerRepository.findById(reservationVO.getTrainerId()).orElseThrow(() -> new RuntimeException("Trainer not found"));
 
         // 스케줄 생성
         ScheduleEntity schedule = new ScheduleEntity();

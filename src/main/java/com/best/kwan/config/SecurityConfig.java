@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.savedrequest.NullRequestCache;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,23 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    //    @Override
-//    protected void configure(HttpSecurity http) throws Exception{
-//        http.formLogin().disable().cors().and().csrf().disable();
-//
-//    }
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/ws/**", "/api/**").permitAll() // 웹소켓과 API 엔드포인트에 대한 권한 부여
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin().disable()
-//                .cors()
-//                .and()
-//                .csrf().disable();
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -55,5 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         return new BCryptPasswordEncoder();
     }
+
 }
 
