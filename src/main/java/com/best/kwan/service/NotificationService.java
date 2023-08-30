@@ -49,15 +49,7 @@ public class NotificationService {
                 .collect(Collectors.toList());
     }
 
-    public List<NotificationResponseVO> getNotificationsByTrainerId(Long trainerId) {
-        TrainerEntity trainer = trainerRepository.findById(trainerId).orElse(null);
-        if (trainer == null) return null;
 
-        List<NotificationEntity> notifications = notificationRepository.findByTrainer(trainer);
-        return notifications.stream()
-                .map(NotificationResponseVO::convertToResponseVO)
-                .collect(Collectors.toList());
-    }
 
 //    public void sendNotificationToUser(NotificationRequestVO requestVO) {
 //        System.out.println("TEST !!! Send Start ::  " );
@@ -106,6 +98,17 @@ public class NotificationService {
 //        String userId = String.valueOf(requestVO.getUserId());
         String message = requestVO.getContent();  // 또는 원하는 형식으로 메시지를 포맷할 수 있습니다.
         notificationHandler.sendNotificationToUser(id, message);
+    }
+
+    public List<NotificationResponseVO> getNotificationsById(Long id) {
+
+        UserEntity user = userRepository.findById(id).orElse(null);
+        if (user == null) return null;
+
+        List<NotificationEntity> notifications = notificationRepository.findByUser(user);
+        return notifications.stream()
+                .map(NotificationResponseVO::convertToResponseVO)
+                .collect(Collectors.toList());
     }
 }
 

@@ -40,9 +40,6 @@ public class ReservationService {
         schedule.setEndTime(reservationVO.getEndTime());
         schedule = scheduleRepository.save(schedule);
 
-        System.out.println("TEST startTime ::: " + schedule.getStartTime());
-        System.out.println("TEST endTime ::: " + schedule.getEndTime());
-
         ReservationEntity reservation = new ReservationEntity();
         reservation.setUser(user);
         reservation.setTrainer(trainer);
@@ -77,10 +74,6 @@ public class ReservationService {
         requestVO.setTrainerId(notification.getTrainer().getTrainerId());
         requestVO.setContent(notification.getContent());
         requestVO.setCheckYn(notification.getCheckYn());
-        System.out.println("TEST RequestVO ::::::: " + requestVO);
-
-
-//        notificationService.sendNotificationToUser(requestVO);
 
         notificationService.sendNotificationToUser(requestVO);
 

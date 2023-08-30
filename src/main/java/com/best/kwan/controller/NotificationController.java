@@ -26,36 +26,15 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<NotificationResponseVO>> getNotificationsByUser(@PathVariable Long userId) {
-        List<NotificationResponseVO> notifications = notificationService.getNotificationsByUserId(userId);
-        if (notifications == null) {
+    @GetMapping("/{id}")
+    public ResponseEntity<List<NotificationResponseVO>> getNotifications(@PathVariable Long id) {
+        List<NotificationResponseVO> notifications = notificationService.getNotificationsById(id);
+
+        if (notifications == null || notifications.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(notifications);
     }
-
-    @GetMapping("/trainer/{trainerId}")
-    public ResponseEntity<List<NotificationResponseVO>> getNotificationsByTrainer(@PathVariable Long trainerId) {
-        List<NotificationResponseVO> notifications = notificationService.getNotificationsByTrainerId(trainerId);
-        if (notifications == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(notifications);
-    }
-
-//    @GetMapping
-//    public ResponseEntity<List<NotificationResponseVO>> test (@PathVariable Long userId){
-//        return notificationService.getNotifications(userId);
-//
-//    }
-
-//    @GetMapping("/{id}")
-//    public ResponseEntity<List<NotificationResponseVO>> getNotifications(@PathVariable Long id) {
-//         NotificationCode test =
-//
-//            return ResponseEntity.ok(notifications);
-//        }
 }
 
 
