@@ -4,17 +4,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // 	"빌드" 단계와 관련된 몇 가지 단계를 수행합니다.
+                    sh "docker build -t gym-api:latest ./"
+
             }
         }
-//         stage('Test') {
-//             steps {
-//                 // 	"테스트" 단계와 관련된 몇 가지 단계를 수행합니다.
-//             }
-//         }
+
         stage('Deploy') {
             steps {
-                //  "배포" 단계와 관련된 몇 가지 단계를 수행합니다.
+               sh "docker run"
             }
         }
     }

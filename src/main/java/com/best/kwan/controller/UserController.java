@@ -7,6 +7,7 @@ import com.best.kwan.vo.PasswordVO;
 import com.best.kwan.vo.PointImageVO;
 import com.best.kwan.vo.UserPageVO;
 import com.best.kwan.vo.UserVO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -90,17 +91,12 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<UserVO> login(@RequestBody  UserVO userVO) {
+    public ResponseEntity<UserVO> login(@RequestBody  UserVO userVO) throws JsonProcessingException {
 //    public ResponseEntity<UserVO> login(@RequestBody  UserVO userVO ,HttpSession session ) {
 
         UserVO loginReulst = userService.login(userVO , session);
 
-        if (loginReulst != null) {
-            session.setAttribute("user", loginReulst);
-            System.out.println("test !!! LoginResult :: " + loginReulst);
-            System.out.println("TEST !!! Login Session User : " + session.getAttribute("user"));
 
-        }
         System.out.println("Login Session ID: " + session.getId());
 
         return ResponseEntity.ok().body(loginReulst);

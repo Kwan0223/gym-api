@@ -7,6 +7,8 @@ import com.best.kwan.exception.CustomException;
 import com.best.kwan.vo.PasswordVO;
 import com.best.kwan.vo.UserPageVO;
 import com.best.kwan.vo.UserVO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,9 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+
+    ObjectMapper objectMapper = new ObjectMapper();
+
 
     public void createUser(UserVO userVO) {
 
@@ -73,7 +78,7 @@ public class UserService {
     }
 
 
-    public void updateUser(UserVO userVo , HttpSession session) {
+    public void updateUser(UserVO userVo, HttpSession session) {
 
         String email = (String) session.getAttribute("loginEmail");
         UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -88,7 +93,7 @@ public class UserService {
     }
 
 
-    public UserVO login(UserVO userVO, HttpSession session) {
+    public UserVO login(UserVO userVO, HttpSession session) throws JsonProcessingException {
 
         UserEntity user = userRepository.findByEmail(userVO.getEmail())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -98,12 +103,19 @@ public class UserService {
         }
 
         UserVO vo = UserVO.toUserVO(user);
-        session.setAttribute("loginEmail", vo.getEmail());
+        // vo -> string 바꾸고
+
+//        session.setAttribute("loginEmail", vo.getEmail());
+//        session.setAttribute("user", vo);
+        String jsonString = objectMapper.writeValueAsString(vo);
+        System.out.println("TEST json !!!  ::: "+ jsonString);
+        session.setAttribute("user", jsonString);
+
 
         return vo;
     }
 
-    public ResponseEntity changeUserPassword(PasswordVO passwordVO , HttpSession session) {
+    public ResponseEntity changeUserPassword(PasswordVO passwordVO, HttpSession session) {
 
         String email = passwordVO.getEmail();
 
@@ -111,7 +123,7 @@ public class UserService {
         System.out.println("TEST user Info : " + user);
 
         String newPwd = passwordVO.getNewPwd();
-        System.out.println("TEST newPwd : " +  newPwd);
+        System.out.println("TEST newPwd : " + newPwd);
 
         if (passwordEncoder.matches(passwordVO.getNewPwd(), user.getPwd())) {
             throw new CustomException(ErrorCode.PASSWORD_SAME);
