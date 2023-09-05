@@ -11,7 +11,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-               sh "docker run"
+                    sh "docker run -d --name gym-api-container -p 80:8080 gym-api:latest"
+
             }
         }
     }
