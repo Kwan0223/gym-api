@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  mysql-database:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: Abcd123@
+      MYSQL_DATABASE: shopping
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+
+  kwan-api:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-database
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-database:3306/shopping?serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Abcd123@
+    restart: always
