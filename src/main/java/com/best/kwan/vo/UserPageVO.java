@@ -12,6 +12,5 @@ public class UserPageVO {
 
 
     private int totalSize;
-
     List<UserVO> userList;
 }

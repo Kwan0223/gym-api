@@ -24,7 +24,6 @@ public class TrainerController {
 
     private final TrainerService trainerService;
 
-
     @GetMapping
     public List<TrainerVO> getTrainer(){
 

@@ -16,8 +16,6 @@ public interface PointRepository extends JpaRepository<PointEntity, Long> {
     @EntityGraph(attributePaths = {"pointImageEntities", "trainerEntities"})
     Page<PointEntity> findAll(Pageable pageable);
 
-
-
     Page<PointEntity> findAllByPointNameContaining(String pointName, Pageable pageable);
 
 

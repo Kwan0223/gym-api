@@ -18,7 +18,7 @@ public @interface Password {
 
     String message() default "비밀번호는 대문자, 소문자, 숫자, 특수문자중 3가지를 포함해야합니다.";
 
-    Class<?>[] groups() default { };
+    Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default { };
+    Class<? extends Payload>[] payload() default {};
 }

@@ -12,32 +12,26 @@ import lombok.*;
 public class UserVO {
 
     private Long userId;
-
     private String name;
-
     @Password
     private String pwd;
-
     private String number;
-
     private String email;
-
     private String address;
-
     private String image;
 
-    public UserVO(UserEntity userEntity){
+    public UserVO(UserEntity userEntity) {
         this.userId = getUserId();
         this.name = userEntity.getName();
-        this.pwd =  userEntity.getPwd();
+        this.pwd = userEntity.getPwd();
         this.number = userEntity.getNumber();
         this.email = userEntity.getEmail();
         this.address = userEntity.getAddress();
     }
 
-    public static UserVO toUserVO (UserEntity userEntity){
+    public static UserVO toUserVO(UserEntity userEntity) {
 
-        UserVO userVO =  new UserVO();
+        UserVO userVO = new UserVO();
         userVO.setUserId(userEntity.getId());
         userVO.setName(userEntity.getName());
         userVO.setPwd(userEntity.getPwd());
@@ -45,6 +39,6 @@ public class UserVO {
         userVO.setNumber(userEntity.getNumber());
         userVO.setAddress(userEntity.getAddress());
 
-        return  userVO;
+        return userVO;
     }
 }

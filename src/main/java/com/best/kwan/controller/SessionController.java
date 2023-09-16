@@ -33,6 +33,7 @@ public class SessionController {
         String jsonUser = (String) session.getAttribute("user");
         UserVO userVO = null;
 
+
         try {
             userVO = objectMapper.readValue(jsonUser, UserVO.class);
         } catch (Exception e) {

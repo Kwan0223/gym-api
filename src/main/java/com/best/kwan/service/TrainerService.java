@@ -21,13 +21,12 @@ public class TrainerService {
 
     private final TrainerRepository trainerRepository;
 
-
     public List<TrainerVO> getTrainerList() {
 
         List<TrainerEntity> trainers = trainerRepository.findAll();
 
         List<TrainerVO> trainerList = trainers.stream()
-                .map(TrainerVO :: new)
+                .map(TrainerVO::new)
                 .collect(Collectors.toList());
         return trainerList;
     }

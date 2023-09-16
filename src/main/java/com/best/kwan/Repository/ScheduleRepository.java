@@ -1,6 +1,5 @@
 package com.best.kwan.Repository;
 
-import com.best.kwan.Entity.ReservationEntity;
 import com.best.kwan.Entity.ScheduleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -17,22 +17,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReservationService {
     private final UserRepository userRepository;
-
     private final TrainerRepository trainerRepository;
-
     private final ScheduleRepository scheduleRepository;
-
     private final ReservationRepository reservationRepository;
-
     private final NotificationRepository notificationRepository;
-
-    private final  NotificationService notificationService;
-
+    private final NotificationService notificationService;
 
 
     public ReservationVO createReservation(ReservationVO reservationVO) {
-            UserEntity user = userRepository.findById(reservationVO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
-            TrainerEntity trainer = trainerRepository.findById(reservationVO.getTrainerId()).orElseThrow(() -> new RuntimeException("Trainer not found"));
+        UserEntity user = userRepository.findById(reservationVO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+        TrainerEntity trainer = trainerRepository.findById(reservationVO.getTrainerId()).orElseThrow(() -> new RuntimeException("Trainer not found"));
 
         // 스케줄 생성
         ScheduleEntity schedule = new ScheduleEntity();
@@ -47,8 +41,6 @@ public class ReservationService {
         reservation.setReservationDate(reservationVO.getDate());
 
         reservation = reservationRepository.save(reservation);
-        System.out.println("TEST reservationDate ::: " + reservation.getReservationDate());
-
 
         // 생성된 예약을 ReservationVO로 변환
         ReservationVO responseVO = new ReservationVO();

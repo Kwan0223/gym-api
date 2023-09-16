@@ -18,19 +18,14 @@ public class ScheduleEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;
-
     @Column(length = 255)
-//    private LocalDateTime startTime;
     private String startTime;
-
     @Column(length = 255)
-//    private LocalDateTime endTime;
     private String endTime;
 
     @ManyToOne
     @JoinColumn(name = "pointId")
     private PointEntity point;
-
 
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
     private List<ReservationEntity> reservationEntities;

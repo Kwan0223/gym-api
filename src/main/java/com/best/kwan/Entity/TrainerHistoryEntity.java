@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Table(name = "trainerHistory")
 @Entity
 public class TrainerHistoryEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long historyId;

@@ -20,7 +20,6 @@ public class TagEntity extends BaseEntity{
     @Column(length = 255)
     private String content;
 
-
     @ManyToOne
     @JoinColumn(name = "pointId")
     private PointEntity point;

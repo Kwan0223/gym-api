@@ -13,9 +13,9 @@ public class ValidationUtil {
         return pwd.matches("^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[!\"#$%&'()*+,./:;<=>?@^_`{|}~-]).{8,}$");
     }
 
-    static  public  boolean checkEmail(String email){
+    static public boolean checkEmail(String email) {
 
-        return  email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+        return email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
 
 }

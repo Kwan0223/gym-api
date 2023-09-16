@@ -22,34 +22,22 @@ import java.util.stream.Collectors;
 public class PointVO {
 
     private Long pointId;
-
     private Long companyId;
-
     private String pointName;
-
     private String managerName;
-
     private String managerPhone;
-
     private String email;
-
     private String pwd;
-
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
-
     private String pointAddress;
-
     private String pointUrl;
-
     private String info;
 
     private List<String> pointImagePath;
-
     private List<TrainerVO> trainerInfo;
     private List<String> productInfo;
     private List<String> scheduleInfo;
-
     private List<String> tagInfo;
 
 

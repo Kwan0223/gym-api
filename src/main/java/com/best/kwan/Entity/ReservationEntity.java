@@ -17,11 +17,8 @@ public class ReservationEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
-
     @Column(length = 255, columnDefinition="TIMESTAMP WITH TIME ZONE")
     private LocalDateTime reservationDate;
-
-
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserEntity user;

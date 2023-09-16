@@ -9,12 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
-//        @Query("SELECT r FROM ReservationEntity r WHERE DATE(r.reservationDate) = :date AND r.trainer.trainerId = :trainerId")
-//        List<ReservationEntity> findByReservationDateAndTrainerTrainerId(LocalDateTime date, Long trainerId);
-
-
-        @Query("SELECT r FROM ReservationEntity r WHERE r.reservationDate = :date AND r.trainer.trainerId = :trainerId")
-        List<ReservationEntity> findByReservationDateAndTrainerTrainerId(LocalDateTime date, Long trainerId);
+    @Query("SELECT r FROM ReservationEntity r WHERE r.reservationDate = :date AND r.trainer.trainerId = :trainerId")
+    List<ReservationEntity> findByReservationDateAndTrainerTrainerId(LocalDateTime date, Long trainerId);
 
 
 }

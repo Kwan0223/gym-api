@@ -12,13 +12,9 @@ import lombok.*;
 public class NotificationRequestVO {
 
     private Long trainerId;
-
     private Long userId;
-
     private boolean checkYn;
-
     private String content;
-
     private NotificationCode notificationCode;
 
 }

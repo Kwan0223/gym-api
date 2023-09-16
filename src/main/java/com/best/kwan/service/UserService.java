@@ -105,10 +105,8 @@ public class UserService {
         UserVO vo = UserVO.toUserVO(user);
         // vo -> string 바꾸고
 
-//        session.setAttribute("loginEmail", vo.getEmail());
-//        session.setAttribute("user", vo);
         String jsonString = objectMapper.writeValueAsString(vo);
-        System.out.println("TEST json !!!  ::: "+ jsonString);
+        System.out.println("TEST json !!!  ::: " + jsonString);
         session.setAttribute("user", jsonString);
 
 

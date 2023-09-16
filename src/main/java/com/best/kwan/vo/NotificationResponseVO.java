@@ -16,16 +16,14 @@ import lombok.Setter;
 public class NotificationResponseVO {
 
     private Long noticeId;
-
     private String content;
-
     private NotificationCode notificationCode;
-
     private TrainerVO trainer;
     private UserVO user;
 
 
     public static NotificationResponseVO convertToResponseVO(NotificationEntity notificationEntity) {
+
         NotificationResponseVO notificationResponseVO = new NotificationResponseVO();
         notificationResponseVO.setNoticeId(notificationEntity.getNoticeId());
         notificationResponseVO.setContent(notificationEntity.getContent());

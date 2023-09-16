@@ -26,8 +26,6 @@ public class NotificationHandler  extends TextWebSocketHandler {
             sess.sendMessage(message);
         }
     }
-
-
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         // URI에서 사용자 ID 추출
@@ -36,7 +34,6 @@ public class NotificationHandler  extends TextWebSocketHandler {
         list.add(session);
         log.info("User " + userId + " connected.");
     }
-
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 
@@ -44,7 +41,6 @@ public class NotificationHandler  extends TextWebSocketHandler {
         log.info("User " + session.getAttributes().get("user_id") + " disconnected.");
         list.remove(session);
     }
-
     private String extractUserIdFromSession(WebSocketSession session) {
         // URI에서 사용자 ID를 추출하는 로직을 작성합니다.
         // 예를 들면, /ws/notification/user/1234에서 '1234'를 추출하는 로직
@@ -52,7 +48,6 @@ public class NotificationHandler  extends TextWebSocketHandler {
         String[] pathSegments = path.split("/");
         return pathSegments[pathSegments.length - 1]; // 마지막 세그먼트 반환
     }
-
     public void sendNotificationToUser(String userId, String message) {
         System.out.println("Sending message to user: " + userId);
         System.out.println("Number of WebSocket sessions: " + list.size());

@@ -47,22 +47,6 @@ public class PointEntity extends BaseEntity{
     @Column(columnDefinition = "TEXT")
     private String info;
 
-
-
-
-
-//    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
-//    private List<PointImageEntity> pointImageEntities;
-//
-//    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
-//    private List<TrainerEntity> trainerEntities;
-//
-//    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
-//    private List<ProductEntity> productEntities;
-//
-//    @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
-//    private List<ScheduleEntity> scheduleEntities;
-
     @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
     private Set<PointImageEntity> pointImageEntities;
 

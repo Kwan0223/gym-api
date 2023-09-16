@@ -9,10 +9,11 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @Component
-public class PasswordValidator implements ConstraintValidator<Password, String>  {
+public class PasswordValidator implements ConstraintValidator<Password, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
+        
         if (value == null) {
             return false;
         }

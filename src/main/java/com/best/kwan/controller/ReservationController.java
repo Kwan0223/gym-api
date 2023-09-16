@@ -31,7 +31,9 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<ReservationVO> createReservation(@RequestBody ReservationVO reservationVO) {
+
         ReservationVO createdReservation = reservationService.createReservation(reservationVO);
+
         return new ResponseEntity<>(createdReservation, HttpStatus.CREATED);
     }
 
@@ -43,10 +45,12 @@ public class ReservationController {
 
         LocalDateTime date = convertStringToLocalDateTime(dateStr);
         List<ReservationVO> reservations = reservationService.getReservationsByDateAndTrainer(date, trainerId);
+
         return ResponseEntity.ok(reservations);
     }
 
     public LocalDateTime convertStringToLocalDateTime(String str) {
+
         return LocalDateTime.parse(str, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
 

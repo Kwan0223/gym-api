@@ -1,2 +1,2 @@
-CREATE USER 'newuser'@'%' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON shopping.* TO 'newuser'@'%';
+CREATE USER 'pkl'@'%' IDENTIFIED BY 'Abcd123@';
+GRANT ALL PRIVILEGES ON gym.* TO 'root'@'%';

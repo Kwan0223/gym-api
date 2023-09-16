@@ -14,21 +14,12 @@ import java.time.LocalDateTime;
 public class ReservationVO {
 
     private Long reservationId;
-
     private Long pointId;
-
     private Long trainerId;
-
     private Long scheduleId;
-
     private Long userId;
-
     private LocalDateTime date;
-
-//    private LocalDateTime startTime;
     private String startTime;
-
-//    private LocalDateTime endTime;
     private String endTime;
 
 }
