@@ -59,6 +59,10 @@ public class PointVO {
         }).collect(Collectors.toList());
         this.tagInfo = pointEntity.getTagEntities().stream().map(TagEntity::getContent).collect(Collectors.toList());
         this.productInfo = pointEntity.getProductEntities().stream().map(product -> product.getName() + " : " + product.getPrice()).collect(Collectors.toList());
+        this.trainerInfo = pointEntity.getTrainerEntities()
+                .stream()
+                .map(TrainerVO::new)
+                .collect(Collectors.toList());
 
     }
 }

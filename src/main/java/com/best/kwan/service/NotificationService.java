@@ -2,7 +2,6 @@ package com.best.kwan.service;
 
 
 import com.best.kwan.Entity.NotificationEntity;
-import com.best.kwan.Entity.TrainerEntity;
 import com.best.kwan.Entity.UserEntity;
 import com.best.kwan.Repository.NotificationRepository;
 import com.best.kwan.Repository.TrainerRepository;
@@ -14,34 +13,28 @@ import com.best.kwan.vo.NotificationResponseVO;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class NotificationService {
 
-    private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
-
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
-    private final TrainerRepository trainerRepository;
-
     private final NotificationHandler notificationHandler;
 
 
 
-    public List<NotificationResponseVO> getNotificationsByUserId(Long userId) {
+    public List<NotificationResponseVO> getNotificationsByUserId(Long userId){
         UserEntity user = userRepository.findById(userId).orElse(null);
+        //orElseThrow로 바꾸자
         if (user == null) return null;
+        // return은 throw로 처리
 
         List<NotificationEntity> notifications = notificationRepository.findByUser(user);
+        //User 말고 fk로 받게 userid로만 받게
         return notifications.stream()
                 .map(NotificationResponseVO::convertToResponseVO)
                 .collect(Collectors.toList());
@@ -71,7 +64,8 @@ public class NotificationService {
         if (user == null) return null;
 
         List<NotificationEntity> notifications = notificationRepository.findByUser(user);
-        return notifications.stream()
+        return notifications
+                .stream()
                 .map(NotificationResponseVO::convertToResponseVO)
                 .collect(Collectors.toList());
     }

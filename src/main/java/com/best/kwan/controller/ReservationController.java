@@ -3,6 +3,7 @@ package com.best.kwan.controller;
 
 import com.best.kwan.Entity.ReservationEntity;
 import com.best.kwan.service.ReservationService;
+import com.best.kwan.util.TimeUtil;
 import com.best.kwan.vo.ReservationVO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,8 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
+    private final TimeUtil timeUtil;
+
     @PostMapping
     public ResponseEntity<ReservationVO> createReservation(@RequestBody ReservationVO reservationVO) {
 
@@ -43,16 +46,17 @@ public class ReservationController {
             @RequestParam("date") String dateStr,
             @RequestParam("trainerId") Long trainerId) {
 
-        LocalDateTime date = convertStringToLocalDateTime(dateStr);
+        LocalDateTime date = timeUtil.convertStringToLocalDateTime(dateStr);
         List<ReservationVO> reservations = reservationService.getReservationsByDateAndTrainer(date, trainerId);
 
         return ResponseEntity.ok(reservations);
     }
 
-    public LocalDateTime convertStringToLocalDateTime(String str) {
-
-        return LocalDateTime.parse(str, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-    }
+    // 함수는 따로 until 빼거나 service 전체적으로 사용할 경우는 util파일로 빼서 호출
+//    public LocalDateTime convertStringToLocalDateTime(String str) {
+//
+//        return LocalDateTime.parse(str, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+//    }
 
 
 

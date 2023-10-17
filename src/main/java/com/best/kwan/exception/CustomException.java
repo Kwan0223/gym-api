@@ -13,7 +13,6 @@ public class CustomException extends RuntimeException{
     String msg;
     HttpStatus httpStatus;
 
-
     public CustomException(ErrorCode errorCode){
         super();
         this.httpStatus = errorCode.getHttpStatus();

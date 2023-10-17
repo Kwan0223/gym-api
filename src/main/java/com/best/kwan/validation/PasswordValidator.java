@@ -1,8 +1,6 @@
 package com.best.kwan.validation;
 
 
-import com.best.kwan.eums.ErrorCode;
-import com.best.kwan.exception.CustomException;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;

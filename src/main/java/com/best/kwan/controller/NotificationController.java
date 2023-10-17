@@ -30,9 +30,7 @@ public class NotificationController {
     public ResponseEntity<List<NotificationResponseVO>> getNotifications(@PathVariable Long id) {
         List<NotificationResponseVO> notifications = notificationService.getNotificationsById(id);
 
-        if (notifications == null || notifications.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        //여기서 빈 리스트를 보내고  프론트에서 빈 리스트가오면 알림이 안뜨게
         return ResponseEntity.ok(notifications);
     }
 }

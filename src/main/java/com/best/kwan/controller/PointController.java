@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,20 +20,41 @@ public class PointController {
 
     private final PointService pointService;
 
+//    @GetMapping
+//    public Page<PointVO> getPointList(@RequestParam(defaultValue = "0") int page,
+//                                      @RequestParam(defaultValue = "5") int size ){
+//
+//        Pageable pageable = PageRequest.of(page, size);
+//        return pointService.getPointList(pageable);
+//    }
+
+
+//    @GetMapping("/search")
+//    public Page<PointVO> searchPointList(@RequestParam String pointName,
+//                                         @RequestParam(defaultValue = "0") int page,
+//                                         @RequestParam(defaultValue = "5") int size) {
+//        Pageable pageable = PageRequest.of(page, size);
+//
+//        return pointService.searchPointList(pointName, pageable);
+//    }
+
     @GetMapping
-    public Page<PointVO> getPointList(@RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "5") int size ) throws JsonProcessingException {
+    public ResponseEntity<Page<PointVO>> getPointList(@RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "5") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
-        return pointService.getPointList(pageable);
+        Page<PointVO> result = pointService.getPointList(pageable);
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/search")
-    public Page<PointVO> searchPointList(@RequestParam String pointName,
-                                         @RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "5") int size) {
+    public ResponseEntity<Page<PointVO>> searchPointList(@RequestParam String pointName,
+                                                         @RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
+        Page<PointVO> result = pointService.searchPointList(pointName, pageable);
 
-        return pointService.searchPointList(pointName, pageable);
+        return ResponseEntity.ok(result);
     }
 }

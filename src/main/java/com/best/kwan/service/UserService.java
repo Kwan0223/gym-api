@@ -10,7 +10,8 @@ import com.best.kwan.vo.UserVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 // controller -> service - repository -> DB
 
@@ -30,14 +33,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    private final HttpSession session;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
+
     ObjectMapper objectMapper = new ObjectMapper();
 
 
     public void createUser(UserVO userVO) {
 
         UserEntity userEntity = new UserEntity(userVO);
-        System.out.println("USER DATA Check : " + userVO.getAddress());
+
         userEntity.setPwd(passwordEncoder.encode(userVO.getPwd()));
+
         userRepository.save(userEntity);
     }
 
@@ -78,9 +87,10 @@ public class UserService {
     }
 
 
-    public void updateUser(UserVO userVo, HttpSession session) {
+    public void updateUser(UserVO userVo) {
 
         String email = (String) session.getAttribute("loginEmail");
+        System.out.println("TEST UPDATE :: " + session);
         UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         UserEntity updateUserEntity = new UserEntity(userVo);
         updateUserEntity.setId(userEntity.getId());
@@ -93,7 +103,8 @@ public class UserService {
     }
 
 
-    public UserVO login(UserVO userVO, HttpSession session) throws JsonProcessingException {
+    public UserVO login(UserVO userVO, HttpSession session) {
+//    public UserVO login(UserVO userVO) {
 
         UserEntity user = userRepository.findByEmail(userVO.getEmail())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -104,18 +115,34 @@ public class UserService {
 
         UserVO vo = UserVO.toUserVO(user);
         // vo -> string 바꾸고
+        try {
+            String jsonString = objectMapper.writeValueAsString(vo);
+            session.setAttribute("user", jsonString);
+            logger.info("userData LonginSession :::: {}",  session.getAttribute("user"));
+            logger.info("세션 ID: {}", session.getId());
 
-        String jsonString = objectMapper.writeValueAsString(vo);
-        System.out.println("TEST json !!!  ::: " + jsonString);
-        session.setAttribute("user", jsonString);
+
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+
+        }
 
 
         return vo;
     }
 
-    public ResponseEntity changeUserPassword(PasswordVO passwordVO, HttpSession session) {
+    public ResponseEntity changeUserPassword(PasswordVO passwordVO) {
+
+        String userData = (String) session.getAttribute("user");
+        logger.info("useraDta Session :::: {}", session.getAttribute("user"));
+        logger.info("세션 ID: {}", session.getAttribute("user"));
+        System.out.println("TEST user Info : " + session.getAttribute("user"));
+
 
         String email = passwordVO.getEmail();
+
+        //세션에서 정보를 가져온다 .
 
         UserEntity user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         System.out.println("TEST user Info : " + user);

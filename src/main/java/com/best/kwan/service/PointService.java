@@ -24,8 +24,8 @@ public class PointService {
 
     private final TrainerService trainerService;
 
-
 public Page<PointVO> getPointList(Pageable pageable) {
+
     Page<PointEntity> pointPage = pointRepository.findAll(pageable);
     List<PointVO> pointList = pointPage.getContent().stream()
             .map(point -> {
@@ -35,6 +35,7 @@ public Page<PointVO> getPointList(Pageable pageable) {
                 return pointVO;
             })
             .collect(Collectors.toList());
+
     return new PageImpl<>(pointList, pageable, pointPage.getTotalElements());
 }
 
@@ -42,13 +43,11 @@ public Page<PointVO> getPointList(Pageable pageable) {
         Page<PointEntity> searchResult = pointRepository.findAllByPointNameContaining(pointName, pageable);
 
         List<PointVO> pointList = searchResult.getContent().stream()
-                .map(point -> {
-                    PointVO pointVO = new PointVO(point);
-                    List<TrainerVO> trainerList = trainerService.getTrainersByPoint(point);
-                    pointVO.setTrainerInfo(trainerList);
-                    return pointVO;
-                })
+                .map(PointVO::new)
                 .collect(Collectors.toList());
+        // 확인 요망
         return new PageImpl<>(pointList, pageable, searchResult.getTotalElements());
     }
 }
+
+// 리스트 데이터 간단하게 만들기

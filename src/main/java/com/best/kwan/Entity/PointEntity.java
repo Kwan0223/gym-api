@@ -51,10 +51,10 @@ public class PointEntity extends BaseEntity{
     private Set<PointImageEntity> pointImageEntities;
 
     @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
-    private Set<TrainerEntity> trainerEntities;
+    private List<TrainerEntity> trainerEntities;
 
     @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
-    private Set<ProductEntity> productEntities;
+    private List<ProductEntity> productEntities;
 
     @OneToMany(mappedBy = "point", cascade = CascadeType.ALL)
     private Set<ScheduleEntity> scheduleEntities;
