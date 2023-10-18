@@ -42,22 +42,12 @@ public class ReservationController {
 
 
     @GetMapping
-    public ResponseEntity<List<ReservationVO>> getReservations(
-            @RequestParam("date") String dateStr,
-            @RequestParam("trainerId") Long trainerId) {
+    public ResponseEntity<List<ReservationVO>> getReservations(@RequestParam("date") String dateStr,
+                                                               @RequestParam("trainerId") Long trainerId) {
 
         LocalDateTime date = timeUtil.convertStringToLocalDateTime(dateStr);
         List<ReservationVO> reservations = reservationService.getReservationsByDateAndTrainer(date, trainerId);
 
         return ResponseEntity.ok(reservations);
     }
-
-    // 함수는 따로 until 빼거나 service 전체적으로 사용할 경우는 util파일로 빼서 호출
-//    public LocalDateTime convertStringToLocalDateTime(String str) {
-//
-//        return LocalDateTime.parse(str, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-//    }
-
-
-
 }

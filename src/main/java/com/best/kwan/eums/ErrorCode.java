@@ -16,6 +16,8 @@ public enum ErrorCode {
     PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호가 맞지 않습니다."),
     PASSWORD_SAME(HttpStatus.BAD_REQUEST, "이전 비밀번호와 동일합니다."),
 
+    TRAINER_NOT_FOUND(HttpStatus.NOT_FOUND, "트레이너를 찾을 수 없습니다."),
+
     PASSWORD_CHECK(HttpStatus.BAD_REQUEST, "비밀번호는 대문자, 소문자, 숫자, 특수문자중 3가지를 포함해야합니다.");
 
     private final HttpStatus httpStatus;

@@ -6,7 +6,9 @@ import com.best.kwan.Entity.UserEntity;
 import com.best.kwan.Repository.NotificationRepository;
 import com.best.kwan.Repository.TrainerRepository;
 import com.best.kwan.Repository.UserRepository;
+import com.best.kwan.eums.ErrorCode;
 import com.best.kwan.eums.NotificationCode;
+import com.best.kwan.exception.CustomException;
 import com.best.kwan.handler.NotificationHandler;
 import com.best.kwan.vo.NotificationRequestVO;
 import com.best.kwan.vo.NotificationResponseVO;
@@ -27,11 +29,9 @@ public class NotificationService {
 
 
 
-    public List<NotificationResponseVO> getNotificationsByUserId(Long userId){
-        UserEntity user = userRepository.findById(userId).orElse(null);
-        //orElseThrow로 바꾸자
-        if (user == null) return null;
-        // return은 throw로 처리
+    public List<NotificationResponseVO> getNotificationsByUserId(Long userId) {
+
+        UserEntity user = userRepository.findById(userId).orElseThrow(() ->  new CustomException(ErrorCode.USER_NOT_FOUND));
 
         List<NotificationEntity> notifications = notificationRepository.findByUser(user);
         //User 말고 fk로 받게 userid로만 받게
@@ -60,8 +60,7 @@ public class NotificationService {
 
     public List<NotificationResponseVO> getNotificationsById(Long id) {
 
-        UserEntity user = userRepository.findById(id).orElse(null);
-        if (user == null) return null;
+        UserEntity user = userRepository.findById(id).orElseThrow(() ->  new CustomException(ErrorCode.USER_NOT_FOUND));
 
         List<NotificationEntity> notifications = notificationRepository.findByUser(user);
         return notifications

@@ -3,7 +3,9 @@ package com.best.kwan.service;
 
 import com.best.kwan.Entity.*;
 import com.best.kwan.Repository.*;
+import com.best.kwan.eums.ErrorCode;
 import com.best.kwan.eums.NotificationCode;
+import com.best.kwan.exception.CustomException;
 import com.best.kwan.vo.NotificationRequestVO;
 import com.best.kwan.vo.ReservationVO;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +28,8 @@ public class ReservationService {
 
     public ReservationVO createReservation(ReservationVO reservationVO) {
 
-        UserEntity user = userRepository.findById(reservationVO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
-        TrainerEntity trainer = trainerRepository.findById(reservationVO.getTrainerId()).orElseThrow(() -> new RuntimeException("Trainer not found"));
+        UserEntity user = userRepository.findById(reservationVO.getUserId()).orElseThrow(() ->  new CustomException(ErrorCode.USER_NOT_FOUND));
+        TrainerEntity trainer = trainerRepository.findById(reservationVO.getTrainerId()).orElseThrow(() -> new CustomException(ErrorCode.TRAINER_NOT_FOUND));
         ScheduleEntity schedule = scheduleRepository.save(reservationVO.convertToScheduleEntity());
         ReservationEntity reservation = reservationRepository.save(reservationVO.toReservationEntity(user, trainer, schedule));
         // 생성된 예약을 ReservationVO로 변환
