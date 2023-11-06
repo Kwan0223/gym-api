@@ -94,9 +94,6 @@ public class UserController {
 
         UserVO loginReulst = userService.login(userVO , session);
 
-
-//        System.out.println("Login Session ID: " + session.getId());
-
         return ResponseEntity.ok().body(loginReulst);
     }
     @GetMapping("/by-email/{email}")

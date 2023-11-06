@@ -104,7 +104,6 @@ public class UserService {
 
 
     public UserVO login(UserVO userVO, HttpSession session) {
-//    public UserVO login(UserVO userVO) {
 
         UserEntity user = userRepository.findByEmail(userVO.getEmail())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -118,10 +117,6 @@ public class UserService {
         try {
             String jsonString = objectMapper.writeValueAsString(vo);
             session.setAttribute("user", jsonString);
-            logger.info("userData LonginSession :::: {}",  session.getAttribute("user"));
-            logger.info("세션 ID: {}", session.getId());
-
-
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -135,17 +130,17 @@ public class UserService {
     public ResponseEntity changeUserPassword(PasswordVO passwordVO) {
 
         String userData = (String) session.getAttribute("user");
-        logger.info("useraDta Session :::: {}", session.getAttribute("user"));
-        logger.info("세션 ID: {}", session.getAttribute("user"));
-        System.out.println("TEST user Info : " + session.getAttribute("user"));
+        UserVO userVO;
 
-
-        String email = passwordVO.getEmail();
-
+        try {
+            userVO = objectMapper.readValue(userData, UserVO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error parsing session user data");
+        }
+        String email = userVO.getEmail();
         //세션에서 정보를 가져온다 .
-
         UserEntity user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-        System.out.println("TEST user Info : " + user);
 
         String newPwd = passwordVO.getNewPwd();
         System.out.println("TEST newPwd : " + newPwd);
